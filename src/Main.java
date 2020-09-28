@@ -1,5 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Kebab");
+        boolean continueing = true;
+        while (continueing) {
+            continueing = Authentication.askLoginOrRegistration();
+        }
     }
 }
