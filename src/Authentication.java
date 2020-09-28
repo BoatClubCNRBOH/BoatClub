@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class Authentication {
@@ -29,16 +30,19 @@ public class Authentication {
     private static void register () {
         int personalNum;
         String fullName;
-        String password;
         String memberId;
         Scanner scan = new Scanner(System.in);
         System.out.print("\n\nFull name: ");
         fullName = scan.nextLine();
-        System.out.print("\n\nPassword: ");
-        password = scan.nextLine();
         System.out.print("\n\n(Has to be only numbers) Personal number: ");
         personalNum = scan.nextInt();
         memberId = generateMemberID(fullName);
+        User newUser = new User(memberId, 1, fullName, personalNum);
+        writeToFile(newUser);
+    }
+
+    private static void writeToFile(User toWrite) {
+        File 
     }
 
     private static String generateMemberID(String fullName) {
