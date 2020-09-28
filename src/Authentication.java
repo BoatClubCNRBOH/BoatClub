@@ -1,16 +1,18 @@
 public class Authentication {
-    private String memberName, memberPassword;
-    private int permissionLevel;
 
-    public boolean askLoginOrRegistration() {
-        return true;
+    public static void askLoginOrRegistration() {
+
     }
 
-    private boolean login(String memName, String memPassword) {
-        return true;
+    private static void login() {
+
     }
 
-    public void invalidLogin() {
+    public static void invalidLogin() {
+
+    }
+
+    public static void register () {
 
     }
 
