@@ -18,12 +18,10 @@ public class Authentication {
         return true;
     }
 
-    public static void login() {
-
-    }
-
-    private static void invalidLogin() {
-
+    public static String login() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\nEnter member ID: ");
+        return scan.nextLine();
     }
 
     public static String register () {
