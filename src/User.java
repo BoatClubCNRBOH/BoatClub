@@ -25,7 +25,7 @@ public class User implements Serializable {
         memberID = memID;
     }
 
-    public String getMemberIDId() {
+    public String getMemberID() {
         return memberID;
     }
 
