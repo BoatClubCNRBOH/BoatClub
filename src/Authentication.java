@@ -1,6 +1,3 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Authentication {
@@ -10,18 +7,18 @@ public class Authentication {
         System.out.print("Welcome to BoatClub!\n\n\t1. Login\n\t2. Register\n\t3. Exit\n\nSelect option above: ");
         String input = scan.nextLine();
         if (input.equals("1"))
-            login();
+            return true;
         else if (input.equals("2"))
-            register();
-        else if (input.equals("3"))
             return false;
+        else if (input.equals("3"))
+            System.exit(1);
         else
             System.out.println("\n\nInvalid input try again!\n\n");
             askLoginOrRegistration();
         return true;
     }
 
-    private static void login() {
+    public static void login() {
 
     }
 
@@ -29,7 +26,7 @@ public class Authentication {
 
     }
 
-    private static void register () {
+    public static String register () {
         String personalNum;
         String fullName;
         String memberId;
@@ -39,18 +36,7 @@ public class Authentication {
         System.out.print("\n\n(Has to be only numbers) Personal number: ");
         personalNum = scan.nextLine();
         memberId = generateMemberID(fullName);
-        User newUser = new User(memberId, 1, fullName, personalNum);
-        writeToFile(newUser);
-    }
-
-    private static void writeToFile(User toWrite) {
-        try {
-            FileWriter writer = new FileWriter("storing.txt");
-            writer.write(String.valueOf(toWrite));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        return memberId + " " +  fullName + " " + personalNum;
     }
 
     private static String generateMemberID(String fullName) {

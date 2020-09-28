@@ -1,17 +1,41 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
         boolean continuing = true;
-        File fileToWrite = new File("storing.txt");
+        while (continuing) {
+            boolean registerOrLogin = Authentication.askLoginOrRegistration();
+            if (registerOrLogin) {
+                Authentication.login();
+            } else if (!registerOrLogin) {
+                String user = Authentication.register();
+                String[] userNew = user.split(" ");
+                User newUser = new User(userNew[0], 1, userNew[1], userNew[2]);
+                writeObject(newUser);
+            }
+        }
+    }
+
+    private static void writeObject(Object userOrBoat) {
         try {
-            fileToWrite.createNewFile();
+            FileOutputStream fileOut = new FileOutputStream("storing.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(userOrBoat);
+            objectOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (continuing) {
-            continuing = Authentication.askLoginOrRegistration();
+    }
+
+    private static Object readObject() {
+        try {
+            FileInputStream fileIn = new FileInputStream("storing.txt");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            Object obj = objectIn.readObject();
+            return obj;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
