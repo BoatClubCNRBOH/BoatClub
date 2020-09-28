@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Authentication {
@@ -28,21 +30,27 @@ public class Authentication {
     }
 
     private static void register () {
-        int personalNum;
+        String personalNum;
         String fullName;
         String memberId;
         Scanner scan = new Scanner(System.in);
         System.out.print("\n\nFull name: ");
         fullName = scan.nextLine();
         System.out.print("\n\n(Has to be only numbers) Personal number: ");
-        personalNum = scan.nextInt();
+        personalNum = scan.nextLine();
         memberId = generateMemberID(fullName);
         User newUser = new User(memberId, 1, fullName, personalNum);
         writeToFile(newUser);
     }
 
     private static void writeToFile(User toWrite) {
-        File 
+        try {
+            FileWriter writer = new FileWriter("storing.txt");
+            writer.write(String.valueOf(toWrite));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static String generateMemberID(String fullName) {
