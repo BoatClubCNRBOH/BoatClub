@@ -13,6 +13,8 @@ public class User implements Serializable {
         personalNumber = personalNum;
     }
 
+    public User(){}
+
     public void setName(String fName) {
         fullName = fName;
     }

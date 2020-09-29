@@ -2,37 +2,43 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
-        boolean continuing = true;
-        while (continuing) {
-            boolean registerOrLogin = Authentication.askLoginOrRegistration();
-            if (registerOrLogin) {
-                Authentication.login();
-            } else if (!registerOrLogin) {
-                String user = Authentication.register();
-                String[] userNew = user.split(" ");
-                User newUser = new User(userNew[0], 1, userNew[1], userNew[2]);
-                writeObject(newUser);
+        Login login = new Login();
+        User user;
+//        boolean continuing = true;
+        while (true) {
+            if (Authentication.askLoginOrRegistration()) {
+                // ask user for member ID
+                String memberID = Authentication.login();
+                // compare member ID against registered users
+                String member = login.userExists(memberID);
+                if (member != null) {
+                    // display logged in screen
+                    String[] params = member.split(",");
+                    user = new User(params[0], Integer.parseInt(params[1]), params[2], params[3]);
+                    login.getAuthenticatedPage();
+                    break;
+                } else System.out.println("Authentication failed");
+            } else {
+                String[] userData = Authentication.register();
+                writeObject(userData, "userDB.csv");
             }
         }
     }
-
-    private static void writeObject(Object userOrBoat) {
+    private static void writeObject(String[] userOrBoat, String filePath) {
         try {
-            FileOutputStream fileOut = new FileOutputStream("storing.txt");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(userOrBoat);
-            objectOut.close();
+            FileWriter fw = new FileWriter(filePath);
+            fw.write(String.join(",", userOrBoat));
+            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static Object readObject() {
+    public static Object readObject(String fileName) {
         try {
-            FileInputStream fileIn = new FileInputStream("storing.txt");
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            Object obj = objectIn.readObject();
-            return obj;
+            // read objects from specified txt
+            return new ObjectInputStream(
+                    new FileInputStream(fileName)).readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
