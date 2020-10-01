@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 class Login {
 
-    private static Path userFile = Paths.get("./userDB.csv");
-    private static Charset cs = StandardCharsets.UTF_8;
+    private static final Path userFile = Paths.get("./userDB.csv");
+    private static final Charset cs = StandardCharsets.UTF_8;
 
     String userExists(String authID) {
         for (String member: Objects.requireNonNull(getMembers())) {
@@ -49,11 +49,17 @@ class Login {
         } else if (choice.equals("2")) {
             System.out.print("\nBoat Options\n\n\t1. Add Boat\n\t2. Edit Boat\n\t3. Remove Boat\n\t4. Go Back\n\nChoose: ");
             choice = scan.nextLine();
-            if (choice.equals("1")) return "BoatAdd";
-            else if (choice.equals("2")) return "BoatEd";
-            else if (choice.equals("3")) return "BoatRem";
-            else
-                System.out.println("Invalid Option");
+            switch (choice) {
+                case "1":
+                    return "BoatAdd";
+                case "2":
+                    return "BoatEd";
+                case "3":
+                    return "BoatRem";
+                default:
+                    System.out.println("Invalid Option");
+                    break;
+            }
                 getAuthenticatedPage();
         } else {
             System.out.println("\nInvalid input try again!");
