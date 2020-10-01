@@ -46,4 +46,12 @@ public class User implements Serializable {
     public int getPermissionLevel() {
         return permissionLevel;
     }
+
+    static void changeInfo() {
+
+    }
+
+    static void removeUser() {
+
+    }
 }

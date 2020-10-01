@@ -34,19 +34,15 @@ public class Boat implements Serializable {
         return boatLength;
     }
 
-    private void addBoat() {
+    static void addBoat() {
 
     }
 
-    public void removeBoat() {
+    static void removeBoat() {
 
     }
 
-    public void changeBoatInfo() {
-
-    }
-
-    public void showBoatInfo() {
+    static void changeBoatInfo() {
 
     }
 }

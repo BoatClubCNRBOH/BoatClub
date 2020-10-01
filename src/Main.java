@@ -16,7 +16,8 @@ public class Main {
                     // display logged in screen
                     String[] params = member.split(",");
                     user = new User(params[0], Integer.parseInt(params[1]), params[2], params[3]);
-                    login.getAuthenticatedPage();
+                    String option = login.getAuthenticatedPage();
+                    callOptionsFunction(option);
                     break;
                 } else System.out.println("Authentication failed");
             } else {
@@ -25,6 +26,17 @@ public class Main {
             }
         }
     }
+
+    private static void callOptionsFunction(String option) {
+        // Something like this to call the functions depending on what options the user chose...
+        // Can change so attributes get changed with, it is not complete or working...
+        if (option.equals("BoatAdd")) Boat.addBoat();
+        else if (option.equals("BoatRem")) Boat.removeBoat();
+        else if (option.equals("BoatEd")) Boat.changeBoatInfo();
+        else if (option.equals("MemInf")) User.changeInfo();
+        else if (option.equals("DelMem")) User.removeUser();
+    }
+
     private static void writeObject(String[] userOrBoat, String filePath) {
         try {
             FileWriter fw = new FileWriter(filePath);
