@@ -34,15 +34,16 @@ public class Boat implements Serializable {
         return boatLength;
     }
 
-    static void addBoat() {
-
+    static void addBoat(String memID) {
+        //  Asks for details on boat, like length, and type, Type can also be the specified types said
+        //  on requirements.
     }
 
-    static void removeBoat() {
-
+    static void removeBoat(String memID) {
+        //  Same as remove  user.
     }
 
-    static void changeBoatInfo() {
-
+    static void changeBoatInfo(String memID) {
+        // Same as change user info
     }
 }

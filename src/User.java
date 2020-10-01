@@ -47,11 +47,14 @@ public class User implements Serializable {
         return permissionLevel;
     }
 
-    static void changeInfo() {
-
+    static void changeInfo(String memID) {
+        //  Fetch user from db and keep as temp object here then remove from db
+        //  then change ifo of class and then add back the object to db.
     }
 
-    static void removeUser() {
-
+    static void removeUser(String memID) {
+        //  Check permission level or check if the member is trying to remove itself
+        //  allow to remove itself but ask for confirmation, if perm level high they
+        //  can remove anyone with confirmation
     }
 }
