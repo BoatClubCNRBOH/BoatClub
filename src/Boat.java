@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Boat implements Serializable {
 
-    private static final String fileName = "boatDB.csv";
+    private static final String fileName = "../boatDB.csv";
     private static final Path filePath = Paths.get(fileName);
     private static Scanner sc;
 
@@ -20,30 +20,51 @@ public class Boat implements Serializable {
         sc = new Scanner(System.in);
         System.out.print("Boat type: ");
         String boatType = sc.nextLine();
-        System.out.println("Boat length: ");
+        System.out.print("Boat length: ");
         String boatLength = sc.nextLine();
         Main.writeObject(new String[]{memID, boatType, boatLength}, fileName);
     }
 
     static void removeBoat(String memID) {
-        try {
-            List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
-            System.out.println("Current boats\n\n");
-            int i = 1;
-            for (String boat : lines) {
-                if (boat.contains(memID))
-                    System.out.println("\t" + i + ". " + boat);
-                    i++;
+        List<String> boats = getBoats();
+        if (boats == null) {
+            System.out.println("You haven't registered any boats.");
+            return;
+        }
+        System.out.println("Current boats\n");
+        int c = 1;
+        for (String boat: boats) {
+            if (boat.contains(memID)) {
+                System.out.println(c + ". " + boat);
+                c++;
             }
-            System.out.println("\nChoose boat: ");
-            int choice = Integer.parseInt(sc.nextLine());
-            Main.removeEntry(fileName, choice);
+        }
+        System.out.print("\nChoose boat: ");
+        int choice = sc.nextInt();
+        Main.removeEntry(fileName, choice);
+    }
+
+    public static List<String> getBoats() {
+        try {
+            return Files.readAllLines(filePath, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     static void changeBoatInfo(String memID) {
         // Same as change user info
+        List<String> boats = getBoats();
+        if (boats == null) {
+            System.out.println("You haven't registered any boats.");
+            return;
+        }
+
+        for (String boat: boats) {
+            if (boat.contains(memID)) {
+                System.out.println();
+            }
+        }
     }
 }

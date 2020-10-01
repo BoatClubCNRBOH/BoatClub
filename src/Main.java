@@ -2,8 +2,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,8 +9,8 @@ public class Main {
     private static String memID;
     public static void main(String[] args) {
         Login login = new Login();
-        User user;
         boolean authenticated = false;
+        System.out.println(System.getProperty("user.dir"));
         while (true) {
             // if user is authenticated we generate another menu
             if (authenticated) {
@@ -31,14 +29,11 @@ public class Main {
                 // compare member ID against registered users
                 String member = login.userExists(memID);
                 if (member != null) {
-                    // display logged in screen
-                    String[] params = member.split(",");
-                    user = new User(params[0], Integer.parseInt(params[1]), params[2], params[3]);
                     authenticated = true;
                 } else System.out.println("Authentication failed: member does not exist!");
             } else {
                 String[] userData = Authentication.register();
-                writeObject(userData, "userDB.csv");
+                writeObject(userData, "../userDB.csv");
             }
         }
     }
@@ -55,7 +50,7 @@ public class Main {
                 Boat.addBoat(memID);
                 break;
             case "BoatRem":
-                removeEntry("boatDB.csv", 0);
+                Boat.removeBoat(memID);
                 break;
             case "BoatEd":
                 Boat.changeBoatInfo(memID);
@@ -64,7 +59,13 @@ public class Main {
                 User.changeInfo(memID);
                 break;
             case "DelMem":
-                removeEntry("userDB.csv", 0);
+                removeEntry("../userDB.csv", 0);
+                break;
+            case "ListSimple":
+                User.listUsersSimple();
+                break;
+            case "ListAdv":
+                User.listUsersAndBoat();
                 break;
         }
     }
@@ -76,9 +77,9 @@ public class Main {
      */
     public static void writeObject(String[] userOrBoat, String fileName) {
         try {
-            FileWriter fw = new FileWriter(fileName, true);
-            fw.write("\n");
+            FileWriter fw = new FileWriter(fileName);
             fw.write(String.join(",", userOrBoat));
+//            fw.write("\n");
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,15 +91,15 @@ public class Main {
      */
     public static void removeEntry(String fileName, int boatToDelete) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Are you sure? (y/n)");
+        System.out.print("Are you sure? (y/n): ");
         if (sc.nextLine().toUpperCase().equals("N")) return;
         try {
             List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
             new FileWriter(fileName, false).close();
             FileWriter fw = new FileWriter(fileName);
             if (boatToDelete == 0) {
-                for (String line : lines) {
-                    if (!line.contains(memID)) fw.write(line);
+                for (String user : lines) {
+                    if (!user.contains(memID)) fw.write(user);
                 }
             } else {
                 int check = 0;
@@ -112,17 +113,6 @@ public class Main {
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static Object readObject(String fileName) {
-        try {
-            // read objects from specified txt
-            return new ObjectInputStream(
-                    new FileInputStream(fileName)).readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }

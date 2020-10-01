@@ -12,7 +12,6 @@ public class Authentication {
         Scanner scan = new Scanner(System.in);
         System.out.print("Welcome to BoatClub!\n\n\t1. Login\n\t2. Register\n\t3. Exit\n\nSelect option above: ");
         String input = scan.nextLine();
-        scan.close();
         switch (input) {
             case "1":
                 return true;

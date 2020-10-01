@@ -2,58 +2,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
 public class User implements Serializable {
-    private String memberID;
-    private int permissionLevel;
-    private String fullName;
-    private String personalNumber;
-
-    public User(String memID, int permLvl, String fullN, String personalNum){
-        memberID = memID;
-        permissionLevel = permLvl;
-        fullName = fullN;
-        personalNumber = personalNum;
-    }
-
-    public User(){}
-
-    public void setName(String fName) {
-        fullName = fName;
-    }
-
-    public String getName() {
-        return fullName;
-    }
-
-    public void setMemberID(String memID) {
-        memberID = memID;
-    }
-
-    public String getMemberID() {
-        return memberID;
-    }
-
-    public void setPersonalNumber(String persNum) {
-        personalNumber = persNum;
-    }
-
-    public String getPersonalNumber() {
-        return personalNumber;
-    }
-
-    public void setPermissionLevel(int permLvl) {
-        permissionLevel = permLvl;
-    }
-
-    public int getPermissionLevel() {
-        return permissionLevel;
-    }
+    private static final Path filePath = Paths.get("../userDB.csv");
+    private static final Charset cs = StandardCharsets.UTF_8;
 
     /**
      * Lets the user change information regarding themselves
@@ -63,7 +22,7 @@ public class User implements Serializable {
         //  Fetch user from db and keep as temp object here then remove from db
         //  then change ifo of class and then add back the object to db.
         try {
-            List<String> lines = Files.readAllLines(Paths.get("./userDB.csv"), StandardCharsets.UTF_8);
+            List<String> lines = Files.readAllLines(filePath, cs);
             new FileWriter("userDB.csv", false).close();
             // add one to the end to be able to use the number as an index
             int option = Integer.parseInt(changeMenu("Select option")) + 1;
@@ -101,5 +60,31 @@ public class User implements Serializable {
         if (!res.equals("1") && !res.equals("2") && !res.equals("3")) changeMenu("Invalid option");
         else if (res.equals("3")) changeMenu("Select option");
         return res;
+    }
+
+    public static void listUsersSimple() {
+        try {
+            for (String user: Files.readAllLines(filePath, cs)) {
+                System.out.println(user);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void listUsersAndBoat() {
+        try {
+            for (String user: Files.readAllLines(filePath, cs)) {
+                System.out.println(user);
+                String memberID = user.substring(0, user.indexOf(","));
+                List<String> boats = Boat.getBoats();
+                assert boats != null;
+                for (String boat : boats) {
+                    if (boat.contains(memberID)) System.out.println("\t" + boat);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

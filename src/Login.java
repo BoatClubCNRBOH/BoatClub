@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 class Login {
 
-    private static final Path userFile = Paths.get("./userDB.csv");
+    private static final Path userFile = Paths.get("../userDB.csv");
     private static final Charset cs = StandardCharsets.UTF_8;
 
     String userExists(String authID) {
@@ -48,13 +48,22 @@ class Login {
         System.out.print("\n\t1. Member Options\n\t2. Boat Options\n\t3. Logout\n\nChoose option: ");
         String choice = scan.nextLine();
         if (choice.equals("1")) {
-            System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Go Back\n\nChoose: ");
+            System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Show members (without boats)\n\t4. Show members (with boats)\n\t5. Go Back\n\nChoose: ");
             choice = scan.nextLine();
-            if (choice.equals("1")) return "MemInf";
-            else if (choice.equals("2")) return "DelMem";
-            else
-                System.out.println("Invalid Option");
-                getAuthenticatedPage();
+            switch (choice) {
+                case "1":
+                    return "MemInf";
+                case "2":
+                    return "DelMem";
+                case "3":
+                    return "ListSimple";
+                case "4":
+                    return "ListAdv";
+                default:
+                    System.out.println("Invalid Option");
+                    getAuthenticatedPage();
+                    break;
+            }
         } else if (choice.equals("2")) {
             System.out.print("\nBoat Options\n\n\t1. Add Boat\n\t2. Edit Boat\n\t3. Remove Boat\n\t4. Go Back\n\nChoose: ");
             choice = scan.nextLine();
