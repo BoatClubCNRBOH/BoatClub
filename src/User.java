@@ -55,6 +55,10 @@ public class User implements Serializable {
         return permissionLevel;
     }
 
+    /**
+     * Lets the user change information regarding themselves
+     * @param memID the current users memberId which will be used to find the user in the db
+     */
     static void changeInfo(String memID) {
         //  Fetch user from db and keep as temp object here then remove from db
         //  then change ifo of class and then add back the object to db.
@@ -65,14 +69,17 @@ public class User implements Serializable {
             int option = Integer.parseInt(changeMenu("Select option")) + 1;
             FileWriter fw = new FileWriter("userDB.csv");
             for (String line: lines) {
+                // we check each line for a match with the member ID
+                // then we ask the user enter the new info
                 if (line.contains(memID)) {
                     String[] values = line.split(",");
                     System.out.print("Enter your new value: ");
                     Scanner sc = new Scanner(System.in);
                     values[option] = sc.nextLine();
+                    //reformat the line
                     line = String.join(",", values);
                 }
-
+                // write each line
                 fw.write(line);
             }
             fw.close();
@@ -81,6 +88,11 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * Generates a menu which gives the user options on what to change
+     * @param msg Header message
+     * @return the option chosen
+     */
     private static String changeMenu(String msg) {
         System.out.println(msg);
         System.out.print("\n\n\t1. Change full name\n\t2. Change personal number\n\t3. Cancel\n\nChoose: ");
@@ -89,22 +101,5 @@ public class User implements Serializable {
         if (!res.equals("1") && !res.equals("2") && !res.equals("3")) changeMenu("Invalid option");
         else if (res.equals("3")) changeMenu("Select option");
         return res;
-    }
-
-    static void removeUser(String memID) {
-        //  Check permission level or check if the member is trying to remove itself
-        //  allow to remove itself but ask for confirmation, if perm level high they
-        //  can remove anyone with confirmation
-        try {
-            List<String> lines = Files.readAllLines(Paths.get("./userDB.csv"), StandardCharsets.UTF_8);
-            new FileWriter("userDB.csv", false).close();
-            FileWriter fw = new FileWriter("userDB.csv");
-            for (String line : lines) {
-                if (!line.contains(memID)) fw.write(line);
-            }
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

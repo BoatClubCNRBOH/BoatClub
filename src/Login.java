@@ -22,6 +22,10 @@ class Login {
         return null;
     }
 
+    /**
+     * Gets all the members from the database
+     * @return ArrayList of members
+     */
     private ArrayList<String> getMembers() {
         try {
             List<String> lines = Files.readAllLines(userFile, cs);
@@ -33,7 +37,11 @@ class Login {
         return null;
     }
 
-    String getAuthenticatedPage() {
+    /**
+     * Prints authenticated/logged in page
+     * @return the users choice from the menu
+     */
+    public String getAuthenticatedPage() {
         // Work In Progress
         // we could move this to some other class if needed.
         Scanner scan = new Scanner(System.in);

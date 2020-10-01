@@ -1,4 +1,9 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     private static String memID;
@@ -36,6 +41,10 @@ public class Main {
         }
     }
 
+    /**
+     * Redirects the user depending on their choices
+     * @param option the option the user submitted
+     */
     private static void callOptionsFunction(String option) {
         // Something like this to call the functions depending on what options the user chose...
         // Can change so attributes get changed with, it is not complete or working...
@@ -44,7 +53,7 @@ public class Main {
                 Boat.addBoat(memID);
                 break;
             case "BoatRem":
-                Boat.removeBoat(memID);
+                removeEntry("boatDB.csv");
                 break;
             case "BoatEd":
                 Boat.changeBoatInfo(memID);
@@ -53,16 +62,41 @@ public class Main {
                 User.changeInfo(memID);
                 break;
             case "DelMem":
-                User.removeUser(memID);
+                removeEntry("userDB.csv");
                 break;
         }
     }
 
-    private static void writeObject(String[] userOrBoat, String filePath) {
+    /**
+     * Takes care of writing an object to a specified database
+     * @param userOrBoat the object to be written to the db files
+     * @param fileName
+     */
+    public static void writeObject(String[] userOrBoat, String fileName) {
         try {
-            FileWriter fw = new FileWriter(filePath, true);
+            FileWriter fw = new FileWriter(fileName, true);
             fw.write("\n");
             fw.write(String.join(",", userOrBoat));
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Removes an entry from the given file which matches the current logged in member ID
+     * @param fileName
+     */
+    public static void removeEntry(String fileName) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Are you sure? (y/n)");
+        if (sc.nextLine().toUpperCase().equals("N")) return;
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+            new FileWriter(fileName, false).close();
+            FileWriter fw = new FileWriter(fileName);
+            for (String line : lines) {
+                if (!line.contains(memID)) fw.write(line);
+            }
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
