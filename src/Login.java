@@ -18,7 +18,8 @@ class Login {
         for (String member: Objects.requireNonNull(getMembers())) {
             if (member.substring(0, member.indexOf(",")).equals(authID)) return member;
         }
-        return "Member does not exist register a new one!";
+        // no user found
+        return null;
     }
 
     private ArrayList<String> getMembers() {
@@ -36,7 +37,7 @@ class Login {
         // Work In Progress
         // we could move this to some other class if needed.
         Scanner scan = new Scanner(System.in);
-        System.out.print("\n\t1. Member Options\n\t2. Boat Options\n\nChoose option: ");
+        System.out.print("\n\t1. Member Options\n\t2. Boat Options\n\t3. Logout\n\nChoose option: ");
         String choice = scan.nextLine();
         if (choice.equals("1")) {
             System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Go Back\n\nChoose: ");
@@ -58,9 +59,11 @@ class Login {
                     return "BoatRem";
                 default:
                     System.out.println("Invalid Option");
+                    getAuthenticatedPage();
                     break;
             }
-                getAuthenticatedPage();
+        } else if (choice.equals("3")){
+            return "Logout";
         } else {
             System.out.println("\nInvalid input try again!");
             getAuthenticatedPage();

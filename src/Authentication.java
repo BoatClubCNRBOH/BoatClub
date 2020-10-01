@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Authentication {
@@ -33,8 +35,16 @@ public class Authentication {
         String fullName = scan.nextLine();
         System.out.print("\n\n(Has to be only numbers) Personal number: ");
         String personalNum = scan.nextLine();
-        String memberId = generateMemberID(fullName);
+        String memberId = generateMemberID(firstToUpper(fullName));
         return new String[]{memberId, "1", fullName, personalNum};
+    }
+
+    private static String firstToUpper(String name) {
+        List<String> nameSplit = Arrays.asList(name.split(" "));
+        StringBuilder result = new StringBuilder();
+        nameSplit.forEach(p -> result.append(p.substring(0, 1).toUpperCase())
+                .append(p, 1, p.length()).append(" "));
+        return result.toString().trim();
     }
 
     private static String generateMemberID(String fullName) {

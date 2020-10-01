@@ -5,9 +5,20 @@ public class Main {
     public static void main(String[] args) {
         Login login = new Login();
         User user;
-//        boolean continuing = true;
+        boolean authenticated = false;
         while (true) {
-            if (Authentication.askLoginOrRegistration()) {
+            // if user is authenticated we generate another menu
+            if (authenticated) {
+                String option = login.getAuthenticatedPage();
+                if (option.equals("Logout")) {
+                    authenticated = false;
+                    continue;
+                }
+                else if (option.equals("DelMem")) authenticated = false;
+                callOptionsFunction(option);
+            }
+            //otherwise we ask the user to login or register
+            else if (Authentication.askLoginOrRegistration()) {
                 // ask user for member ID
                 memID = Authentication.login();
                 // compare member ID against registered users
@@ -16,10 +27,8 @@ public class Main {
                     // display logged in screen
                     String[] params = member.split(",");
                     user = new User(params[0], Integer.parseInt(params[1]), params[2], params[3]);
-                    String option = login.getAuthenticatedPage();
-                    callOptionsFunction(option);
-                    break;
-                } else System.out.println("Authentication failed");
+                    authenticated = true;
+                } else System.out.println("Authentication failed: member does not exist!");
             } else {
                 String[] userData = Authentication.register();
                 writeObject(userData, "userDB.csv");
@@ -51,7 +60,8 @@ public class Main {
 
     private static void writeObject(String[] userOrBoat, String filePath) {
         try {
-            FileWriter fw = new FileWriter(filePath);
+            FileWriter fw = new FileWriter(filePath, true);
+            fw.write("\n");
             fw.write(String.join(",", userOrBoat));
             fw.close();
         } catch (IOException e) {
