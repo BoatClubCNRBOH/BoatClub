@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
         Login login = new Login();
         boolean authenticated = false;
-        System.out.println(System.getProperty("user.dir"));
         while (true) {
             // if user is authenticated we generate another menu
             if (authenticated) {

@@ -26,20 +26,15 @@ public class Boat implements Serializable {
     }
 
     static void removeBoat(String memID) {
+        //not working
         List<String> boats = getBoats();
         if (boats == null) {
             System.out.println("You haven't registered any boats.");
             return;
         }
-        System.out.println("Current boats\n");
-        int c = 1;
-        for (String boat: boats) {
-            if (boat.contains(memID)) {
-                System.out.println(c + ". " + boat);
-                c++;
-            }
-        }
+
         System.out.print("\nChoose boat: ");
+        listBoats(boats, memID);
         int choice = sc.nextInt();
         Main.removeEntry(fileName, choice);
     }
@@ -53,8 +48,19 @@ public class Boat implements Serializable {
         return null;
     }
 
+    private static void listBoats(List<String> boats, String memID) {
+        System.out.println("Current boats\n");
+        int c = 1;
+        for (String boat: boats) {
+            if (boat.contains(memID)) {
+                System.out.println(c + ". " + boat);
+                c++;
+            }
+        }
+    }
+
     static void changeBoatInfo(String memID) {
-        // Same as change user info
+        // Not working
         List<String> boats = getBoats();
         if (boats == null) {
             System.out.println("You haven't registered any boats.");
