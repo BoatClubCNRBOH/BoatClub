@@ -2,6 +2,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,7 +55,7 @@ public class Main {
                 Boat.addBoat(memID);
                 break;
             case "BoatRem":
-                removeEntry("boatDB.csv");
+                removeEntry("boatDB.csv", 0);
                 break;
             case "BoatEd":
                 Boat.changeBoatInfo(memID);
@@ -62,7 +64,7 @@ public class Main {
                 User.changeInfo(memID);
                 break;
             case "DelMem":
-                removeEntry("userDB.csv");
+                removeEntry("userDB.csv", 0);
                 break;
         }
     }
@@ -86,7 +88,7 @@ public class Main {
      * Removes an entry from the given file which matches the current logged in member ID
      * @param fileName
      */
-    public static void removeEntry(String fileName) {
+    public static void removeEntry(String fileName, int boatToDelete) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you sure? (y/n)");
         if (sc.nextLine().toUpperCase().equals("N")) return;
@@ -94,8 +96,18 @@ public class Main {
             List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
             new FileWriter(fileName, false).close();
             FileWriter fw = new FileWriter(fileName);
-            for (String line : lines) {
-                if (!line.contains(memID)) fw.write(line);
+            if (boatToDelete == 0) {
+                for (String line : lines) {
+                    if (!line.contains(memID)) fw.write(line);
+                }
+            } else {
+                int check = 0;
+                for (String boat : lines) {
+                    if (check == boatToDelete - 1) {
+                        fw.write(boat);
+                    } else if (boat.contains(memID)) check++;
+                }
+
             }
             fw.close();
         } catch (IOException e) {

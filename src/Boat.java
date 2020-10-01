@@ -31,11 +31,13 @@ public class Boat implements Serializable {
             System.out.println("Current boats\n\n");
             int i = 1;
             for (String boat : lines) {
-                System.out.println("\t" + i + ". " + boat);
-                i++;
+                if (boat.contains(memID))
+                    System.out.println("\t" + i + ". " + boat);
+                    i++;
             }
             System.out.println("\nChoose boat: ");
-            String choice = sc.nextLine();
+            int choice = Integer.parseInt(sc.nextLine());
+            Main.removeEntry(fileName, choice);
         } catch (IOException e) {
             e.printStackTrace();
         }
