@@ -1,5 +1,6 @@
 package View;
 
+import Controller.DatabaseControll;
 import Model.UserModel;
 
 import java.util.Scanner;
@@ -11,6 +12,7 @@ public class UserVIew {
     }
 
     public void userInterface() {
+        DatabaseControll remove = new DatabaseControll();
         Scanner scan = new Scanner(System.in);
         String choice;
         System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Show members (without boats)\n\t4. Show members (with boats)\n\t5. Go Back\n\nChoose: ");
@@ -19,7 +21,10 @@ public class UserVIew {
             case "1":
                 changeMenu();
             case "2":
-
+                System.out.print("\nAre you sure you want to delete your user? (Y/N): ");
+                if (scan.nextLine().equals("Y"))
+                    remove.removeEntry("userDB.csv", 0, memID);
+                else userInterface();
             case "3":
 
             case "4":

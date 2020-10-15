@@ -52,21 +52,16 @@ public class UserModel {
         //  then change ifo of class and then add back the object to db.
         try {
             List<String> lines = Files.readAllLines(Paths.get("userDB.csv"), StandardCharsets.UTF_8);
-            new FileWriter("userDB.csv", false).close();
-            // add one to the end to be able to use the number as an index
+            new FileWriter("userDB.csv", false).close(); // add one to the end to be able to use the number as an index
             int option = optionChoice + 1;
             FileWriter fw = new FileWriter("userDB.csv");
-            for (String line: lines) {
-                // we check each line for a match with the member ID
-                // then we ask the user enter the new info
+            for (String line: lines) { // we check each line for a match with the member ID, then we ask the user enter the new info
                 if (line.contains(memID)) {
                     String[] values = line.split(",");
                     values[option] = newInfo;
-                    //reformat the line
-                    line = String.join(",", values);
+                    line = String.join(",", values); //reformat the line
                 }
-                // write each line
-                fw.write(line);
+                fw.write(line); // write each line
             }
             fw.close();
         } catch (IOException e) {
