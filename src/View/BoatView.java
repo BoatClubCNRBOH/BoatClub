@@ -52,7 +52,7 @@ public class BoatView {
 
     public void boatEdit() {
         System.out.println("Which boat would you like to edit\nBoats:");
-        System.out.println(boat.getPersonalBoats(memID) + "\n");
+        System.out.println("\n" + boat.printPersonalBoats(memID));
         System.out.print("Choice: ");
         String boatChoice = scan.nextLine();
         System.out.print("What would you like to edit\n\n\t1. Type\n\t2. Length\n\nChoice: ");

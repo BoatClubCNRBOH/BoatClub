@@ -63,7 +63,7 @@ public class UserModel {
                     values[option] = newInfo;
                     line = String.join(",", values); //reformat the line
                 }
-                fw.write(line); // write each line
+                fw.write(line + "\n"); // write each line
             }
             fw.close();
         } catch (IOException e) {

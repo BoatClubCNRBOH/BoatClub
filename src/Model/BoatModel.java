@@ -1,7 +1,5 @@
 package Model;
 
-import View.BoatView;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -9,7 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BoatModel {
 
@@ -34,16 +34,25 @@ public class BoatModel {
         return null;
     }
 
-    public String getPersonalBoats(String memID) {
-        StringBuilder sb = new StringBuilder();
+    private List<String> getPersonalBoats(String memID) {
         List<String> boats = getBoats();
-        int numOfBoat = 1;
+        List<String> userBoats = new ArrayList<>();
         for (String boat : boats) {
             if (boat.contains(memID)) {
-                sb.append("\n").append("\t").append(numOfBoat).append(". ").append(boat);
-                numOfBoat++;
+                userBoats.add(boat);
             }
         }
+        return userBoats;
+    }
+
+    public String printPersonalBoats(String memID) {
+        List<String> boats = getPersonalBoats(memID);
+        StringBuilder sb = new StringBuilder();
+        AtomicInteger boatIndex = new AtomicInteger(1);
+        boats.forEach(boat -> {
+            sb.append(boatIndex.get()).append(". ").append(boat).append("\n");
+            boatIndex.getAndIncrement();
+        });
         return sb.toString();
     }
 
@@ -68,7 +77,7 @@ public class BoatModel {
                         line = String.join(",", values); //reformat the line
                     }
                 }
-                fw.write(line); // write each line
+                fw.write(line + "\n"); // write each line
             }
             fw.close();
         } catch (IOException e) {

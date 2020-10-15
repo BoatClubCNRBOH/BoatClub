@@ -1,0 +1,22 @@
+Because the website that is needed for downloading JDK8 was under technical difficulties it lead to me not being able to create a runnable
+jar file so this will instruct you how to make it. you need jdk8 (Java development kit 8)
+
+1. Download intellijIDEA
+2. Open project in IntellijIDEA
+3. click file
+4. click project structure
+5. click artifacts
+6. click the little "+" buttom
+7. click create with module dependencies
+8. choose main class
+9. click apply
+10. click ok
+11. click on build on the top bar
+12. click build artifact
+13. click build
+
+then in out folder a jar file is found copy and paste it in other locatiion,  go to that location in cmd and type
+
+"java -jar Boatclub.jar"
+
+Also remove/edit boat is not working currently other than that everything is working.

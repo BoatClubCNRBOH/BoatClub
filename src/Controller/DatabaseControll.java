@@ -27,19 +27,19 @@ public class DatabaseControll {
     * Removes an entry from the given file which matches the current logged in member ID
     * @param fileName
     */
-    public void removeEntry(String fileName, int boatToDelete, String memID) {
+    public void removeEntry(String fileName, int entryIndex, String memID) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
             new FileWriter(fileName, false).close();
             FileWriter fw = new FileWriter(fileName);
-            if (boatToDelete == 0) {
+            if (entryIndex == 0) {
                 for (String user : lines) {
                     if (!user.contains(memID)) fw.write(user);
                 }
             } else {
                 int check = 0;
                 for (String boat : lines) {
-                    if (check == boatToDelete - 1) {
+                    if (check == entryIndex - 1) {
                         fw.write(boat);
                     } else if (boat.contains(memID)) check++;
                 }
