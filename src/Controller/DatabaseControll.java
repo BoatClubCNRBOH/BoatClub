@@ -15,9 +15,8 @@ public class DatabaseControll {
     */
     public void writeObject(String[] userOrBoat, String fileName) {
         try {
-            FileWriter fw = new FileWriter(fileName);
-            fw.write(String.join(",", userOrBoat));
-            fw.write("\n");
+            FileWriter fw = new FileWriter(fileName, true);
+            fw.write(String.join(",", userOrBoat) + "\n");
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
