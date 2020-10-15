@@ -24,7 +24,7 @@ public class UserModel {
      * @param name the given input string
      * @return the formatted string
      */
-    private String firstToUpper(String name) {
+    public String firstToUpper(String name) {
         List<String> nameSplit = Arrays.asList(name.split(" "));
         StringBuilder result = new StringBuilder();
         nameSplit.forEach(p -> result.append(p.substring(0, 1).toUpperCase())

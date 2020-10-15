@@ -1,24 +1,28 @@
 package View;
 
+import Controller.DatabaseControll;
 import Model.UserModel;
 
 import java.util.Scanner;
 
 public class InterfaceView {
+    private String memID;
 
     /**
      * Prints the login/register screen
      * @return the users choice
      */
     public boolean askLoginOrRegistration() {
+        DatabaseControll db = new DatabaseControll();
         Scanner scan = new Scanner(System.in);
         System.out.print("Welcome to BoatClub!\n\n\t1. Login\n\t2. Register\n\t3. Exit\n\nSelect option above: ");
         String input = scan.nextLine();
         switch (input) {
             case "1":
-                return true;
+                memID = login();
             case "2":
-                return false;
+                String[] newUser = register();
+                db.writeObject(newUser, "userDB.csv");
             case "3":
                 System.exit(1);
             default:
@@ -35,12 +39,14 @@ public class InterfaceView {
      * @return the users choice
      */
     public String[] register () {
+        UserModel user = new UserModel();
         Scanner scan = new Scanner(System.in);
         System.out.print("\n\nFull name: ");
         String fullName = scan.nextLine();
         System.out.print("\n\n(Has to be only numbers) Personal number: ");
         String personalNum = scan.nextLine();
-        String memberId = UserModel.generateMemberID(UserModel.firstToUpper(fullName));
+        String memberId = user.generateMemberID(user.firstToUpper(fullName));
+        System.out.println("Your member ID is: " + memberId);
         return new String[]{memberId, "1", fullName, personalNum};
     }
 

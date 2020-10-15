@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
-
+/*
 public class Boat implements Serializable {
 
     private static final String fileName = "../boatDB.csv";
@@ -74,3 +74,5 @@ public class Boat implements Serializable {
         }
     }
 }
+
+ */

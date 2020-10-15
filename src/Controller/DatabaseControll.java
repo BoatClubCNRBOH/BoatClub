@@ -18,7 +18,7 @@ public class DatabaseControll {
         try {
             FileWriter fw = new FileWriter(fileName);
             fw.write(String.join(",", userOrBoat));
-//          fw.write("\n");
+            fw.write("\n");
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
