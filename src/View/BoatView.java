@@ -1,5 +1,6 @@
 package View;
 
+import Controller.DatabaseControll;
 import Model.BoatModel;
 import Model.UserModel;
 
@@ -13,12 +14,14 @@ public class BoatView {
 
 
     public void boatInterface(String memID) {
+        DatabaseControll db = new DatabaseControll();
         this.memID = memID;
         Scanner scan = new Scanner(System.in);
         System.out.print("\nBoat Options\n\n\t1. Add Boat\n\t2. Edit Boat\n\t3. Remove Boat\n\t4. Go Back\n\nChoose: ");
         switch (scan.nextLine()) {
             case "1":
-
+                db.writeObject(registerBoat(), "boatDB.csv");
+                boatInterface(memID);
             case "2":
 
             case "3":
@@ -39,7 +42,7 @@ public class BoatView {
         boat.setBoatType(scan.nextLine());
         System.out.print("Length: ");
         boat.setBoatLength(scan.nextLine());
-        return null;
+        return boat.makeBoat(memID);
     }
 
 

@@ -24,8 +24,7 @@ public class InterfaceView {
                 if (memID == null) askLoginOrRegistration();
                 else getAuthenticatedPage(memID);
             case "2":
-                String[] newUser = register();
-                db.writeObject(newUser, "userDB.csv");
+                db.writeObject(register(), "userDB.csv");
                 askLoginOrRegistration();
             case "3":
                 System.exit(1);

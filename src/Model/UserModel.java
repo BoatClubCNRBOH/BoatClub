@@ -97,6 +97,7 @@ public class UserModel {
                 for (String boat : boats) {
                     if (boat.contains(memberID)) list.append("\n").append("\t").append(boat);
                 }
+                list.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -21,7 +21,6 @@ public class BoatModel {
 
     private BoatType boatType;
     private String boatLength;
-    private String boat;
 
     public List<String> getBoats() {
         try {
@@ -32,17 +31,10 @@ public class BoatModel {
         return null;
     }
 
-    public void registerBoat() {
-
+    public String[] makeBoat(String memID) {
+        return new String[]{memID, String.valueOf(getBoatType()), getBoatLength()};
     }
 
-    public String getBoat() {
-        return boat;
-    }
-
-    public void setBoat(String boat) {
-        this.boat = boat;
-    }
 
     public String getBoatLength() {
         return boatLength;
