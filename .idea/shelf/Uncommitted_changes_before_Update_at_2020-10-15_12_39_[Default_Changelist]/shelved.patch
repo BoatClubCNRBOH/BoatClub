@@ -1,0 +1,196 @@
+Index: src/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.io.File;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.io.Serializable;\r\nimport java.nio.charset.Charset;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Path;\r\nimport java.nio.file.Paths;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\npublic class User implements Serializable {\r\n    private static final Path filePath = Paths.get(\"../userDB.csv\");\r\n    private static final Charset cs = StandardCharsets.UTF_8;\r\n\r\n    /**\r\n     * Lets the user change information regarding themselves\r\n     * @param memID the current users memberId which will be used to find the user in the db\r\n     */\r\n    static void changeInfo(String memID) {\r\n        //  Fetch user from db and keep as temp object here then remove from db\r\n        //  then change ifo of class and then add back the object to db.\r\n        try {\r\n            List<String> lines = Files.readAllLines(filePath, cs);\r\n            new FileWriter(\"userDB.csv\", false).close();\r\n            // add one to the end to be able to use the number as an index\r\n            int option = Integer.parseInt(changeMenu(\"Select option\")) + 1;\r\n            FileWriter fw = new FileWriter(\"userDB.csv\");\r\n            for (String line: lines) {\r\n                // we check each line for a match with the member ID\r\n                // then we ask the user enter the new info\r\n                if (line.contains(memID)) {\r\n                    String[] values = line.split(\",\");\r\n                    System.out.print(\"Enter your new value: \");\r\n                    Scanner sc = new Scanner(System.in);\r\n                    values[option] = sc.nextLine();\r\n                    //reformat the line\r\n                    line = String.join(\",\", values);\r\n                }\r\n                // write each line\r\n                fw.write(line);\r\n            }\r\n            fw.close();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Generates a menu which gives the user options on what to change\r\n     * @param msg Header message\r\n     * @return the option chosen\r\n     */\r\n    private static String changeMenu(String msg) {\r\n        System.out.println(msg);\r\n        System.out.print(\"\\n\\n\\t1. Change full name\\n\\t2. Change personal number\\n\\t3. Cancel\\n\\nChoose: \");\r\n        Scanner sc = new Scanner(System.in);\r\n        String res = sc.nextLine();\r\n        if (!res.equals(\"1\") && !res.equals(\"2\") && !res.equals(\"3\")) changeMenu(\"Invalid option\");\r\n        else if (res.equals(\"3\")) changeMenu(\"Select option\");\r\n        return res;\r\n    }\r\n\r\n    public static void listUsersSimple() {\r\n        try {\r\n            for (String user: Files.readAllLines(filePath, cs)) {\r\n                System.out.println(user);\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    public static void listUsersAndBoat() {\r\n        try {\r\n            for (String user: Files.readAllLines(filePath, cs)) {\r\n                System.out.println(user);\r\n                String memberID = user.substring(0, user.indexOf(\",\"));\r\n                List<String> boats = Boat.getBoats();\r\n                assert boats != null;\r\n                for (String boat : boats) {\r\n                    if (boat.contains(memberID)) System.out.println(\"\\t\" + boat);\r\n                }\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/User.java	(revision ffd2eac8f18c698bf86296fabf081e859fd8aae3)
++++ src/User.java	(date 1602755722247)
+@@ -87,4 +87,4 @@
+             e.printStackTrace();
+         }
+     }
+-}
++}
+\ No newline at end of file
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.io.*;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Paths;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\npublic class Main {\r\n    /*\r\n}\r\n    private static String memID;\r\n    public static void main(String[] args) {\r\n        boolean continuing = true;\r\n        while (continuing) {\r\n            boolean registerOrLogin = Authentication.askLoginOrRegistration();\r\n            if (registerOrLogin) {\r\n                String memberId = Authentication.login();\r\n            } else if (!registerOrLogin) {\r\n                String user = Authentication.register();\r\n                String[] userNew = user.split(\" \");\r\n                writeObject(userNew);\r\n        Login login = new Login();\r\n        boolean authenticated = false;\r\n        while (true) {\r\n            // if user is authenticated we generate another menu\r\n            if (authenticated) {\r\n                String option = login.getAuthenticatedPage();\r\n                if (option.equals(\"Logout\")) {\r\n                    authenticated = false;\r\n                    continue;\r\n                }\r\n                else if (option.equals(\"DelMem\")) authenticated = false;\r\n                callOptionsFunction(option);\r\n            }\r\n            //otherwise we ask the user to login or register\r\n            else if (Authentication.askLoginOrRegistration()) {\r\n                // ask user for member ID\r\n                memID = Authentication.login();\r\n                // compare member ID against registered users\r\n                String member = login.userExists(memID);\r\n                if (member != null) {\r\n                    authenticated = true;\r\n                } else System.out.println(\"Authentication failed: member does not exist!\");\r\n            } else {\r\n                String[] userData = Authentication.register();\r\n                writeObject(userData, \"../userDB.csv\");\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Redirects the user depending on their choices\r\n     * @param option the option the user submitted\r\n     */\r\n/*\r\n    private static void callOptionsFunction (String option) {\r\n        // Something like this to call the functions depending on what options the user chose...\r\n        // Can change so attributes get changed with, it is not complete or working...\r\n        switch (option) {\r\n            case \"BoatAdd\":\r\n                Boat.addBoat(memID);\r\n                break;\r\n            case \"BoatRem\":\r\n                Boat.removeBoat(memID);\r\n                break;\r\n            case \"BoatEd\":\r\n                Boat.changeBoatInfo(memID);\r\n                break;\r\n            case \"MemInf\":\r\n                User.changeInfo(memID);\r\n                break;\r\n            case \"DelMem\":\r\n                removeEntry(\"../userDB.csv\", 0);\r\n                break;\r\n            case \"ListSimple\":\r\n                User.listUsersSimple();\r\n                break;\r\n            case \"ListAdv\":\r\n                User.listUsersAndBoat();\r\n                break;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Takes care of writing an object to a specified database\r\n     * @param userOrBoat the object to be written to the db files\r\n     * @param fileName\r\n     */\r\n/*\r\n    public static void writeObject(String[] userOrBoat, String fileName) {\r\n        try {\r\n            FileWriter fw = new FileWriter(fileName);\r\n            fw.write(String.join(\",\", userOrBoat));\r\n//            fw.write(\"\\n\");\r\n            fw.close();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n    /**\r\n     * Removes an entry from the given file which matches the current logged in member ID\r\n     * @param fileName\r\n     */\r\n/*\r\n    public static void removeEntry(String fileName, int boatToDelete) {\r\n        Scanner sc = new Scanner(System.in);\r\n        System.out.print(\"Are you sure? (y/n): \");\r\n        if (sc.nextLine().toUpperCase().equals(\"N\")) return;\r\n        try {\r\n            List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);\r\n            new FileWriter(fileName, false).close();\r\n            FileWriter fw = new FileWriter(fileName);\r\n            if (boatToDelete == 0) {\r\n                for (String user : lines) {\r\n                    if (!user.contains(memID)) fw.write(user);\r\n                }\r\n            } else {\r\n                int check = 0;\r\n                for (String boat : lines) {\r\n                    if (check == boatToDelete - 1) {\r\n                        fw.write(boat);\r\n                    } else if (boat.contains(memID)) check++;\r\n                }\r\n\r\n            }\r\n            fw.close();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n */\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Main.java	(revision ffd2eac8f18c698bf86296fabf081e859fd8aae3)
++++ src/Main.java	(date 1602755725550)
+@@ -6,19 +6,8 @@
+ import java.util.Scanner;
+ 
+ public class Main {
+-    /*
+-}
+     private static String memID;
+     public static void main(String[] args) {
+-        boolean continuing = true;
+-        while (continuing) {
+-            boolean registerOrLogin = Authentication.askLoginOrRegistration();
+-            if (registerOrLogin) {
+-                String memberId = Authentication.login();
+-            } else if (!registerOrLogin) {
+-                String user = Authentication.register();
+-                String[] userNew = user.split(" ");
+-                writeObject(userNew);
+         Login login = new Login();
+         boolean authenticated = false;
+         while (true) {
+@@ -52,8 +41,7 @@
+      * Redirects the user depending on their choices
+      * @param option the option the user submitted
+      */
+-/*
+-    private static void callOptionsFunction (String option) {
++    private static void callOptionsFunction(String option) {
+         // Something like this to call the functions depending on what options the user chose...
+         // Can change so attributes get changed with, it is not complete or working...
+         switch (option) {
+@@ -86,7 +74,6 @@
+      * @param userOrBoat the object to be written to the db files
+      * @param fileName
+      */
+-/*
+     public static void writeObject(String[] userOrBoat, String fileName) {
+         try {
+             FileWriter fw = new FileWriter(fileName);
+@@ -101,7 +88,6 @@
+      * Removes an entry from the given file which matches the current logged in member ID
+      * @param fileName
+      */
+-/*
+     public static void removeEntry(String fileName, int boatToDelete) {
+         Scanner sc = new Scanner(System.in);
+         System.out.print("Are you sure? (y/n): ");
+@@ -128,7 +114,4 @@
+             e.printStackTrace();
+         }
+     }
+-
+- */
+ }
+-
+Index: src/Authentication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Model.UserModel;\r\n\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\npublic class Authentication {\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Authentication.java	(revision ffd2eac8f18c698bf86296fabf081e859fd8aae3)
++++ src/Authentication.java	(date 1602755728465)
+@@ -1,15 +1,82 @@
+-import Model.UserModel;
+-
+ import java.util.Arrays;
+ import java.util.List;
+ import java.util.Scanner;
+ 
+ public class Authentication {
+ 
+-
++    /**
++     * Prints the login/register screen
++     * @return the users choice
++     */
++    public static boolean askLoginOrRegistration() {
++        Scanner scan = new Scanner(System.in);
++        System.out.print("Welcome to BoatClub!\n\n\t1. Login\n\t2. Register\n\t3. Exit\n\nSelect option above: ");
++        String input = scan.nextLine();
++        switch (input) {
++            case "1":
++                return true;
++            case "2":
++                return false;
++            case "3":
++                System.exit(1);
++            default:
++                System.out.println("\n\nInvalid input try again!\n\n");
++                askLoginOrRegistration();
++                break;
++        }
++        return true;
++    }
+ 
++    /**
++     * Prints the login screen
++     * @return the users choice
++     */
++    public static String login() {
++        Scanner scan = new Scanner(System.in);
++        System.out.print("\nEnter member ID: ");
++        return scan.nextLine();
++    }
+ 
++    /**
++     * Prints the register screen
++     * Prompts the user for a full name and a personal number
++     * @return the users choice
++     */
++    public static String[] register () {
++        Scanner scan = new Scanner(System.in);
++        System.out.print("\n\nFull name: ");
++        String fullName = scan.nextLine();
++        System.out.print("\n\n(Has to be only numbers) Personal number: ");
++        String personalNum = scan.nextLine();
++        String memberId = generateMemberID(firstToUpper(fullName));
++        return new String[]{memberId, "1", fullName, personalNum};
++    }
+ 
++    /**
++     * Converts the first letters in each part of a given string to uppercase
++     * @param name the given input string
++     * @return the formatted string
++     */
++    private static String firstToUpper(String name) {
++        List<String> nameSplit = Arrays.asList(name.split(" "));
++        StringBuilder result = new StringBuilder();
++        nameSplit.forEach(p -> result.append(p.substring(0, 1).toUpperCase())
++                .append(p, 1, p.length()).append(" "));
++        return result.toString().trim();
++    }
+ 
+-
++    /**
++     * Generates a unique member ID which will be associated with a new user
++     * @param fullName The new users full name
++     * @return a random ID
++     */
++    private static String generateMemberID(String fullName) {
++        String[] name = fullName.split(" ");
++        String firstName = String.valueOf(name[0].charAt(0));
++        String lastName = String.valueOf(name[1].charAt(0));
++        int randomNum = (int)(Math.random()*9000) + 1000;
++        String memberId = firstName + lastName + randomNum;
++        System.out.println("Your member ID is: " + memberId);
++        return memberId;
++    }
+ }
+Index: src/Login.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.io.*;\r\nimport java.nio.charset.Charset;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Path;\r\nimport java.nio.file.Paths;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Objects;\r\nimport java.util.Scanner;\r\n\r\nclass Login {\r\n\r\n    private static final Path userFile = Paths.get(\"../userDB.csv\");\r\n    private static final Charset cs = StandardCharsets.UTF_8;\r\n\r\n    String userExists(String authID) {\r\n        for (String member: Objects.requireNonNull(getMembers())) {\r\n            if (member.substring(0, member.indexOf(\",\")).equals(authID)) return member;\r\n        }\r\n        // no user found\r\n        return null;\r\n    }\r\n\r\n    /**\r\n     * Gets all the members from the database\r\n     * @return ArrayList of members\r\n     */\r\n    private ArrayList<String> getMembers() {\r\n        try {\r\n            List<String> lines = Files.readAllLines(userFile, cs);\r\n            return new ArrayList<>(lines);\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n        System.out.println(\"No members to show!\");\r\n        return null;\r\n    }\r\n\r\n    /**\r\n     * Prints authenticated/logged in page\r\n     * @return the users choice from the menu\r\n     */\r\n    public String getAuthenticatedPage() {\r\n        // Work In Progress\r\n        // we could move this to some other class if needed.\r\n        Scanner scan = new Scanner(System.in);\r\n        System.out.print(\"\\n\\t1. Member Options\\n\\t2. Boat Options\\n\\t3. Logout\\n\\nChoose option: \");\r\n        String choice = scan.nextLine();\r\n        if (choice.equals(\"1\")) {\r\n            System.out.print(\"\\nMember Options\\n\\n\\t1. Change Info\\n\\t2. Delete Member\\n\\t3. Show members (without boats)\\n\\t4. Show members (with boats)\\n\\t5. Go Back\\n\\nChoose: \");\r\n            choice = scan.nextLine();\r\n            switch (choice) {\r\n                case \"1\":\r\n                    return \"MemInf\";\r\n                case \"2\":\r\n                    return \"DelMem\";\r\n                case \"3\":\r\n                    return \"ListSimple\";\r\n                case \"4\":\r\n                    return \"ListAdv\";\r\n                default:\r\n                    System.out.println(\"Invalid Option\");\r\n                    getAuthenticatedPage();\r\n                    break;\r\n            }\r\n        } else if (choice.equals(\"2\")) {\r\n            System.out.print(\"\\nBoat Options\\n\\n\\t1. Add Boat\\n\\t2. Edit Boat\\n\\t3. Remove Boat\\n\\t4. Go Back\\n\\nChoose: \");\r\n            choice = scan.nextLine();\r\n            switch (choice) {\r\n                case \"1\":\r\n                    return \"BoatAdd\";\r\n                case \"2\":\r\n                    return \"BoatEd\";\r\n                case \"3\":\r\n                    return \"BoatRem\";\r\n                default:\r\n                    System.out.println(\"Invalid Option\");\r\n                    getAuthenticatedPage();\r\n                    break;\r\n            }\r\n        } else if (choice.equals(\"3\")){\r\n            return \"Logout\";\r\n        } else {\r\n            System.out.println(\"\\nInvalid input try again!\");\r\n            getAuthenticatedPage();\r\n        }\r\n        return \"No Option\";\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Login.java	(revision ffd2eac8f18c698bf86296fabf081e859fd8aae3)
++++ src/Login.java	(date 1602755728486)
+@@ -1,3 +1,4 @@
++
+ import java.io.*;
+ import java.nio.charset.Charset;
+ import java.nio.charset.StandardCharsets;
+@@ -87,4 +88,4 @@
+         }
+         return "No Option";
+     }
+-}
++}
+\ No newline at end of file

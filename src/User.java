@@ -10,9 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-public class User implements Serializable {
-    /*
-}
+/*public class User implements Serializable {
     private static final Path filePath = Paths.get("../userDB.csv");
     private static final Charset cs = StandardCharsets.UTF_8;
 
@@ -20,8 +18,7 @@ public class User implements Serializable {
      * Lets the user change information regarding themselves
      * @param memID the current users memberId which will be used to find the user in the db
      */
-    /*
-    static void changeInfo(String memID) {
+    /*static void changeInfo(String memID) {
         //  Fetch user from db and keep as temp object here then remove from db
         //  then change ifo of class and then add back the object to db.
         try {
@@ -54,8 +51,7 @@ public class User implements Serializable {
      * Generates a menu which gives the user options on what to change
      * @param msg Header message
      * @return the option chosen
-     */
-    /*
+     *//*
     private static String changeMenu(String msg) {
         System.out.println(msg);
         System.out.print("\n\n\t1. Change full name\n\t2. Change personal number\n\t3. Cancel\n\nChoose: ");
@@ -64,9 +60,9 @@ public class User implements Serializable {
         if (!res.equals("1") && !res.equals("2") && !res.equals("3")) changeMenu("Invalid option");
         else if (res.equals("3")) changeMenu("Select option");
         return res;
-    }
-/*
-    public static void listUsersSimple() {
+    }*/
+
+    /*public static void listUsersSimple() {
         try {
             for (String user: Files.readAllLines(filePath, cs)) {
                 System.out.println(user);
@@ -75,7 +71,7 @@ public class User implements Serializable {
             e.printStackTrace();
         }
     }
-/*
+
     public static void listUsersAndBoat() {
         try {
             for (String user: Files.readAllLines(filePath, cs)) {
@@ -91,6 +87,4 @@ public class User implements Serializable {
             e.printStackTrace();
         }
     }
-
-     */
-}
+}*/

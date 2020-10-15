@@ -1,0 +1,74 @@
+<changelist name="Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]" date="1602762529370" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2020-10-15 13:48 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/View/InterfaceView.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/View/InterfaceView.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/InterfaceView.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/View/UserVIew.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/View/UserVIew.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/UserVIew.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Model/BoatModel.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/Model/BoatModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/BoatModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Main.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/Main.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Model/InterfaceModel.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/Model/InterfaceModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/InterfaceModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/View/Main.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/View/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/Main1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Model/UserModel.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/Model/UserModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/UserModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Controller/AuthenticationController.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/Controller/AuthenticationController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/AuthenticationController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/META-INF/Boatclub.kotlin_module" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/User.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/View/BoatView.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/View/BoatView.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/BoatView.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Login.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Authentication.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/BoatClub/Controller/DatabaseControll.class" />
+    <option name="AFTER_PATH" value="out/production/BoatClub/Controller/DatabaseControll.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020-10-15_13_48_[Default_Changelist]/DatabaseControll.class" />
+  </binary>
+</changelist>
