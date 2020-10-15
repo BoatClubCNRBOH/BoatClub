@@ -1,6 +1,7 @@
 package View;
 
 import Controller.DatabaseControll;
+import Model.BoatModel;
 import Model.UserModel;
 
 import java.util.Scanner;
@@ -8,6 +9,8 @@ import java.util.Scanner;
 public class UserVIew {
     UserModel change = new UserModel();
     DatabaseControll remove = new DatabaseControll();
+    BoatModel boat = new BoatModel();
+
     private String memID;
     public UserVIew(String memID) {
         this.memID = memID;
@@ -31,7 +34,9 @@ public class UserVIew {
                 System.out.print("Go back with any input: ");
                 if (scan.nextLine() != null) userInterface();
             case "4":
-
+                System.out.println(change.listUsersAndBoat(boat.getBoats()));
+                System.out.print("Go back with any input: ");
+                if (scan.nextLine() != null) userInterface();
             case "5":
                 break;
             default:

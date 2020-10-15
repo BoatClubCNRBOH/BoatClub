@@ -10,8 +10,6 @@ import java.util.Scanner;
 /*
 public class Boat implements Serializable {
 
-    private static final String fileName = "../boatDB.csv";
-    private static final Path filePath = Paths.get(fileName);
     private static Scanner sc;
 
     static void addBoat(String memID) {
@@ -39,14 +37,7 @@ public class Boat implements Serializable {
         Main.removeEntry(fileName, choice);
     }
 
-    public static List<String> getBoats() {
-        try {
-            return Files.readAllLines(filePath, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     private static void listBoats(List<String> boats, String memID) {
         System.out.println("Current boats\n");
