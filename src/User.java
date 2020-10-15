@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-<<<<<<< HEAD
 public class User implements Serializable {
     /*
 }
@@ -99,4 +98,6 @@ public class User implements Serializable {
             e.printStackTrace();
         }
     }
-}*/
+
+     */
+}

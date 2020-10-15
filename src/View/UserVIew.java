@@ -1,5 +1,7 @@
 package View;
 
+import Model.UserModel;
+
 import java.util.Scanner;
 
 public class UserVIew {
@@ -15,7 +17,7 @@ public class UserVIew {
         choice = scan.nextLine();
         switch (choice) {
             case "1":
-                changeMenu("");
+                changeMenu();
             case "2":
 
             case "3":
@@ -31,19 +33,27 @@ public class UserVIew {
         }
 
     }
-/**
- * Generates a menu which gives the user options on what to change
- * @param msg Header message
- * @return the option chosen
- */
 
-    private String changeMenu(String msg) {
-        System.out.println(msg);
+    /**
+    * Generates a menu which gives the user options on what to change
+    * @return the option chosen
+    */
+    private String changeMenu() {
+        UserModel change = new UserModel();
         System.out.print("\n\n\t1. Change full name\n\t2. Change personal number\n\t3. Cancel\n\nChoose: ");
         Scanner sc = new Scanner(System.in);
         String res = sc.nextLine();
-        if (!res.equals("1") && !res.equals("2") && !res.equals("3")) changeMenu("Invalid option");
-        else if (res.equals("3")) userInterface();
+        if (res.equals("1")) {
+            System.out.println("\nNew full name: ");
+            change.changeInfo(memID, sc.nextLine(), 1);
+        } else if (res.equals("2")) {
+
+        } else if (res.equals("3")) {
+            userInterface();
+        } else {
+            System.out.println("Invalid");
+            changeMenu();
+        }
         return res;
     }
 }
