@@ -52,7 +52,7 @@ public class UserModel {
     }
 
     public void setMemID () {
-        memID = generateMemberID(getName().toUpperCase());
+        memID = generateMemberID(firstToUpper(getName()));
     }
 
     public String getMemID () {

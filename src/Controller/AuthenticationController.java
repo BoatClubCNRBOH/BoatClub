@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AuthenticationController {
-    private final Path userFile = Paths.get("../userDB.csv");
+    private final Path userFile = Paths.get("userDB.csv");
     private final Charset cs = StandardCharsets.UTF_8;
 
     public String checkUser(String memID) {

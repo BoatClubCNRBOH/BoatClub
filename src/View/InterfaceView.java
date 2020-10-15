@@ -21,9 +21,8 @@ public class InterfaceView {
         switch (input) {
             case "1":
                 memID = login();
-                System.out.println(memID);
-                if (memID != null) getAuthenticatedPage();
-                else askLoginOrRegistration();
+                if (memID == null) askLoginOrRegistration();
+                else getAuthenticatedPage();
             case "2":
                 String[] newUser = register();
                 db.writeObject(newUser, "userDB.csv");
@@ -109,7 +108,7 @@ public class InterfaceView {
                     break;
             }
         } else if (choice.equals("3")){
-            return "Logout";
+            askLoginOrRegistration();
         } else {
             System.out.println("\nInvalid input try again!");
             getAuthenticatedPage();
