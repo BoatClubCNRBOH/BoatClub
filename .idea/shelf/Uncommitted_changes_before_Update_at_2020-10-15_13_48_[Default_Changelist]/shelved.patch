@@ -1,0 +1,178 @@
+Index: src/View/BoatView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package View;\r\n\r\npublic class BoatView {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/View/BoatView.java	(revision ec706ea1da1d58fb5d4063fa2f79551d2e271ccc)
++++ src/View/BoatView.java	(date 1602758737145)
+@@ -1,4 +1,35 @@
+ package View;
+ 
+ public class BoatView {
++    public enum BoatType {
++        Sailboat, Motorsailer, Canoe, Other
++    }
++    private BoatType boatType;
++    private String boatLength;
++    private String boat;
++
++
++    public String getBoat() {
++        return boat;
++    }
++
++    public void setBoat(String boat) {
++        this.boat = boat;
++    }
++
++    public String getBoatLength() {
++        return boatLength;
++    }
++
++    public void setBoatLength(String boatLength) {
++        this.boatLength = boatLength;
++    }
++
++    public BoatType getBoatType() {
++        return boatType;
++    }
++
++    public void setBoatType(BoatType boatType) {
++        this.boatType = boatType;
++    }
+ }
+Index: src/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.io.File;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.io.Serializable;\r\nimport java.nio.charset.Charset;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Path;\r\nimport java.nio.file.Paths;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\npublic class User implements Serializable {\r\n    /*\r\n}\r\n    private static final Path filePath = Paths.get(\"../userDB.csv\");\r\n    private static final Charset cs = StandardCharsets.UTF_8;\r\n\r\n    /**\r\n     * Lets the user change information regarding themselves\r\n     * @param memID the current users memberId which will be used to find the user in the db\r\n     */\r\n    /*\r\n    static void changeInfo(String memID) {\r\n        //  Fetch user from db and keep as temp object here then remove from db\r\n        //  then change ifo of class and then add back the object to db.\r\n        try {\r\n            List<String> lines = Files.readAllLines(filePath, cs);\r\n            new FileWriter(\"userDB.csv\", false).close();\r\n            // add one to the end to be able to use the number as an index\r\n            int option = Integer.parseInt(changeMenu(\"Select option\")) + 1;\r\n            FileWriter fw = new FileWriter(\"userDB.csv\");\r\n            for (String line: lines) {\r\n                // we check each line for a match with the member ID\r\n                // then we ask the user enter the new info\r\n                if (line.contains(memID)) {\r\n                    String[] values = line.split(\",\");\r\n                    System.out.print(\"Enter your new value: \");\r\n                    Scanner sc = new Scanner(System.in);\r\n                    values[option] = sc.nextLine();\r\n                    //reformat the line\r\n                    line = String.join(\",\", values);\r\n                }\r\n                // write each line\r\n                fw.write(line);\r\n            }\r\n            fw.close();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Generates a menu which gives the user options on what to change\r\n     * @param msg Header message\r\n     * @return the option chosen\r\n     */\r\n    /*\r\n    private static String changeMenu(String msg) {\r\n        System.out.println(msg);\r\n        System.out.print(\"\\n\\n\\t1. Change full name\\n\\t2. Change personal number\\n\\t3. Cancel\\n\\nChoose: \");\r\n        Scanner sc = new Scanner(System.in);\r\n        String res = sc.nextLine();\r\n        if (!res.equals(\"1\") && !res.equals(\"2\") && !res.equals(\"3\")) changeMenu(\"Invalid option\");\r\n        else if (res.equals(\"3\")) changeMenu(\"Select option\");\r\n        return res;\r\n    }\r\n/*\r\n    public static void listUsersSimple() {\r\n        try {\r\n            for (String user: Files.readAllLines(filePath, cs)) {\r\n                System.out.println(user);\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n/*\r\n    public static void listUsersAndBoat() {\r\n        try {\r\n            for (String user: Files.readAllLines(filePath, cs)) {\r\n                System.out.println(user);\r\n                String memberID = user.substring(0, user.indexOf(\",\"));\r\n                List<String> boats = Boat.getBoats();\r\n                assert boats != null;\r\n                for (String boat : boats) {\r\n                    if (boat.contains(memberID)) System.out.println(\"\\t\" + boat);\r\n                }\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n     */\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/User.java	(revision ec706ea1da1d58fb5d4063fa2f79551d2e271ccc)
++++ src/User.java	(date 1602758818724)
+@@ -10,9 +10,7 @@
+ import java.util.List;
+ import java.util.Scanner;
+ 
+-public class User implements Serializable {
+-    /*
+-}
++/*public class User implements Serializable {
+     private static final Path filePath = Paths.get("../userDB.csv");
+     private static final Charset cs = StandardCharsets.UTF_8;
+ 
+@@ -20,8 +18,7 @@
+      * Lets the user change information regarding themselves
+      * @param memID the current users memberId which will be used to find the user in the db
+      */
+-    /*
+-    static void changeInfo(String memID) {
++    /*static void changeInfo(String memID) {
+         //  Fetch user from db and keep as temp object here then remove from db
+         //  then change ifo of class and then add back the object to db.
+         try {
+@@ -54,8 +51,7 @@
+      * Generates a menu which gives the user options on what to change
+      * @param msg Header message
+      * @return the option chosen
+-     */
+-    /*
++     *//*
+     private static String changeMenu(String msg) {
+         System.out.println(msg);
+         System.out.print("\n\n\t1. Change full name\n\t2. Change personal number\n\t3. Cancel\n\nChoose: ");
+@@ -64,9 +60,9 @@
+         if (!res.equals("1") && !res.equals("2") && !res.equals("3")) changeMenu("Invalid option");
+         else if (res.equals("3")) changeMenu("Select option");
+         return res;
+-    }
+-/*
+-    public static void listUsersSimple() {
++    }*/
++
++    /*public static void listUsersSimple() {
+         try {
+             for (String user: Files.readAllLines(filePath, cs)) {
+                 System.out.println(user);
+@@ -75,7 +71,7 @@
+             e.printStackTrace();
+         }
+     }
+-/*
++
+     public static void listUsersAndBoat() {
+         try {
+             for (String user: Files.readAllLines(filePath, cs)) {
+@@ -91,6 +87,4 @@
+             e.printStackTrace();
+         }
+     }
+-
+-     */
+-}
++}*/
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.io.*;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Paths;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\npublic class Main {\r\n    /*\r\n}\r\n    private static String memID;\r\n    public static void main(String[] args) {\r\n        boolean continuing = true;\r\n        while (continuing) {\r\n            boolean registerOrLogin = Authentication.askLoginOrRegistration();\r\n            if (registerOrLogin) {\r\n                String memberId = Authentication.login();\r\n            } else if (!registerOrLogin) {\r\n                String user = Authentication.register();\r\n                String[] userNew = user.split(\" \");\r\n                writeObject(userNew);\r\n        Login login = new Login();\r\n        boolean authenticated = false;\r\n        while (true) {\r\n            // if user is authenticated we generate another menu\r\n            if (authenticated) {\r\n                String option = login.getAuthenticatedPage();\r\n                if (option.equals(\"Logout\")) {\r\n                    authenticated = false;\r\n                    continue;\r\n                }\r\n                else if (option.equals(\"DelMem\")) authenticated = false;\r\n                callOptionsFunction(option);\r\n            }\r\n            //otherwise we ask the user to login or register\r\n            else if (Authentication.askLoginOrRegistration()) {\r\n                // ask user for member ID\r\n                memID = Authentication.login();\r\n                // compare member ID against registered users\r\n                String member = login.userExists(memID);\r\n                if (member != null) {\r\n                    authenticated = true;\r\n                } else System.out.println(\"Authentication failed: member does not exist!\");\r\n            } else {\r\n                String[] userData = Authentication.register();\r\n                writeObject(userData, \"../userDB.csv\");\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Redirects the user depending on their choices\r\n     * @param option the option the user submitted\r\n     */\r\n/*\r\n    private static void callOptionsFunction (String option) {\r\n        // Something like this to call the functions depending on what options the user chose...\r\n        // Can change so attributes get changed with, it is not complete or working...\r\n        switch (option) {\r\n            case \"BoatAdd\":\r\n                Boat.addBoat(memID);\r\n                break;\r\n            case \"BoatRem\":\r\n                Boat.removeBoat(memID);\r\n                break;\r\n            case \"BoatEd\":\r\n                Boat.changeBoatInfo(memID);\r\n                break;\r\n            case \"MemInf\":\r\n                User.changeInfo(memID);\r\n                break;\r\n            case \"DelMem\":\r\n                removeEntry(\"../userDB.csv\", 0);\r\n                break;\r\n            case \"ListSimple\":\r\n                User.listUsersSimple();\r\n                break;\r\n            case \"ListAdv\":\r\n                User.listUsersAndBoat();\r\n                break;\r\n        }\r\n    }\r\n\r\n\r\n */\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/Main.java	(revision ec706ea1da1d58fb5d4063fa2f79551d2e271ccc)
++++ src/Main.java	(date 1602758402124)
+@@ -81,6 +81,53 @@
+         }
+     }
+ 
++    /**
++     * Takes care of writing an object to a specified database
++     * @param userOrBoat the object to be written to the db files
++     * @param fileName
++     */
++/*
++    public static void writeObject(String[] userOrBoat, String fileName) {
++        try {
++            FileWriter fw = new FileWriter(fileName);
++            fw.write(String.join(",", userOrBoat));
++//            fw.write("\n");
++            fw.close();
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++    }
++    /**
++     * Removes an entry from the given file which matches the current logged in member ID
++     * @param fileName
++     */
++/*
++    public static void removeEntry(String fileName, int boatToDelete) {
++        Scanner sc = new Scanner(System.in);
++        System.out.print("Are you sure? (y/n): ");
++        if (sc.nextLine().toUpperCase().equals("N")) return;
++        try {
++            List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
++            new FileWriter(fileName, false).close();
++            FileWriter fw = new FileWriter(fileName);
++            if (boatToDelete == 0) {
++                for (String user : lines) {
++                    if (!user.contains(memID)) fw.write(user);
++                }
++            } else {
++                int check = 0;
++                for (String boat : lines) {
++                    if (check == boatToDelete - 1) {
++                        fw.write(boat);
++                    } else if (boat.contains(memID)) check++;
++                }
++
++            }
++            fw.close();
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++    }
+ 
+  */
+ }
