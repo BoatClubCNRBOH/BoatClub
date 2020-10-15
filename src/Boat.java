@@ -12,17 +12,6 @@ public class Boat implements Serializable {
 
     private static Scanner sc;
 
-    static void addBoat(String memID) {
-        //  Asks for details on boat, like length, and type, Type can also be the specified types said
-        //  on requirements.
-        sc = new Scanner(System.in);
-        System.out.print("Boat type: ");
-        String boatType = sc.nextLine();
-        System.out.print("Boat length: ");
-        String boatLength = sc.nextLine();
-        Main.writeObject(new String[]{memID, boatType, boatLength}, fileName);
-    }
-
     static void removeBoat(String memID) {
         //not working
         List<String> boats = getBoats();

@@ -88,21 +88,21 @@ public class UserModel {
 
 
     public String listUsersAndBoat(List<String> boats) {
-        StringBuilder list = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         try {
             for (String user : Files.readAllLines(pathFile, cs)) {
-                list.append(user);
+                sb.append(user);
                 String memberID = user.substring(0, user.indexOf(","));
                 assert boats != null;
                 for (String boat : boats) {
-                    if (boat.contains(memberID)) list.append("\n").append("\t").append(boat);
+                    if (boat.contains(memberID)) sb.append("\n").append("\t").append(boat);
                 }
-                list.append("\n");
+                sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return list.toString();
+        return sb.toString();
     }
 
     public void setName (String newName) {
