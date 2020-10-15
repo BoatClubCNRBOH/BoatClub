@@ -6,7 +6,7 @@ public class Main {
         while (continuing) {
             boolean registerOrLogin = Authentication.askLoginOrRegistration();
             if (registerOrLogin) {
-                Authentication.login();
+                String memberId = Authentication.login();
             } else if (!registerOrLogin) {
                 String user = Authentication.register();
                 String[] userNew = user.split(" ");
