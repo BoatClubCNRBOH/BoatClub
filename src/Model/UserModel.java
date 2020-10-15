@@ -1,7 +1,15 @@
 package Model;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserModel {
     private String name;
@@ -33,6 +41,39 @@ public class UserModel {
         nameSplit.forEach(p -> result.append(p.substring(0, 1).toUpperCase())
                 .append(p, 1, p.length()).append(" "));
         return result.toString().trim();
+    }
+
+    /**
+    * Lets the user change information regarding themselves
+    * @param memID the current users memberId which will be used to find the user in the db
+    */
+    void changeInfo(String memID) {
+        //  Fetch user from db and keep as temp object here then remove from db
+        //  then change ifo of class and then add back the object to db.
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("userDB.csv"), StandardCharsets.UTF_8);
+            new FileWriter("userDB.csv", false).close();
+            // add one to the end to be able to use the number as an index
+            //int option = Integer.parseInt(changeMenu("Select option")) + 1;
+            FileWriter fw = new FileWriter("userDB.csv");
+            for (String line: lines) {
+                // we check each line for a match with the member ID
+                // then we ask the user enter the new info
+                if (line.contains(memID)) {
+                    String[] values = line.split(",");
+                    System.out.print("Enter your new value: ");
+                    Scanner sc = new Scanner(System.in);
+                    //values[option] = sc.nextLine();
+                    //reformat the line
+                    line = String.join(",", values);
+                }
+                // write each line
+                fw.write(line);
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setName (String newName) {
