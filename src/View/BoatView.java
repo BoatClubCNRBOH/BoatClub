@@ -24,8 +24,10 @@ public class BoatView {
                 boatInterface(memID);
             case "2":
                 boatEdit();
+                boatInterface(memID);
             case "3":
-
+                removeBoat();
+                boatInterface(memID);
             case "4":
                 mainMenu.getAuthenticatedPage(memID);
             default:
@@ -33,6 +35,10 @@ public class BoatView {
                 boatInterface(memID);
                 break;
         }
+    }
+
+    public void removeBoat() {
+
     }
 
     public String[] registerBoat() {
@@ -55,11 +61,9 @@ public class BoatView {
             System.out.print("\n\nTypes\n\n\t1. Sailboat\n\t2. Motorsailer\n\t3. Kayak/Canoe\n\t4. Other\n\nChoose:  ");
             boat.setBoatType(scan.nextLine());
             boat.changeInfo(memID, String.valueOf(boat.getBoatType()), 1,  Integer.parseInt(boatChoice));
-            boatInterface(memID);
         } else if (editChoice.equals("2")){
             System.out.print("\nNew length: ");
             boat.changeInfo(memID, scan.nextLine(), 2, Integer.parseInt(boatChoice));
-            boatInterface(memID);
         } else {
             System.out.println("Invalid");
             boatEdit();
