@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserModel {
+    private String name;
+    private String persNum;
+    private String memID;
 
     /**
      * Generates a unique member ID which will be associated with a new user
@@ -30,5 +33,33 @@ public class UserModel {
         nameSplit.forEach(p -> result.append(p.substring(0, 1).toUpperCase())
                 .append(p, 1, p.length()).append(" "));
         return result.toString().trim();
+    }
+
+    public void setName (String newName) {
+        name = newName;
+    }
+
+    public String getName () {
+        return name;
+    }
+
+    public void setPersNum (String persNumb) {
+        persNum = persNumb;
+    }
+
+    public String getPersNum () {
+        return  persNum;
+    }
+
+    public void setMemID () {
+        memID = generateMemberID(getName().toUpperCase());
+    }
+
+    public String getMemID () {
+        return memID;
+    }
+
+    public String[] makeUser() {
+        return new String[]{getMemID(), "1", getName(), getPersNum()};
     }
 }

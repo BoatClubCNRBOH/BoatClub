@@ -42,12 +42,12 @@ public class InterfaceView {
         UserModel user = new UserModel();
         Scanner scan = new Scanner(System.in);
         System.out.print("\n\nFull name: ");
-        String fullName = scan.nextLine();
+        user.setName(scan.nextLine());
         System.out.print("\n\n(Has to be only numbers) Personal number: ");
-        String personalNum = scan.nextLine();
-        String memberId = user.generateMemberID(user.firstToUpper(fullName));
-        System.out.println("Your member ID is: " + memberId);
-        return new String[]{memberId, "1", fullName, personalNum};
+        user.setPersNum(scan.nextLine());
+        user.setMemID();
+        System.out.println("Your member ID is: " + user.getMemID());
+        return user.makeUser();
     }
 
     /**

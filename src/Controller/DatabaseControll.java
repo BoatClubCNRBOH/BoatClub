@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 public class DatabaseControll {
     /**
@@ -30,9 +29,6 @@ public class DatabaseControll {
     * @param fileName
     */
     public void removeEntry(String fileName, int boatToDelete, String memID) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Are you sure? (y/n): ");
-        if (sc.nextLine().toUpperCase().equals("N")) return;
         try {
             List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
             new FileWriter(fileName, false).close();
