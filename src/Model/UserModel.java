@@ -7,13 +7,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserModel {
-    private Path pathFile = Paths.get("userDB.csv");
-    private Charset cs = StandardCharsets.UTF_8;
+    private final Path pathFile = Paths.get("userDB.csv");
+    private final Charset cs = StandardCharsets.UTF_8;
     private String name;
     private String persNum;
     private String memID;
@@ -72,13 +73,41 @@ public class UserModel {
     }
 
     /**
-     * Lists users
+     * List a specific user by member ID
+     * @param memID member id
+     * @param boats list of boats
+     * @param verbose boolean
+     * @return String to be printed
      */
-    public String listUsersSimple() {
+    public String listSpecificUser(String memID, List<String> boats, boolean verbose) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            boolean foundUser = false;
+            for (String user : Files.readAllLines(pathFile, cs)) {
+                if (user.contains(memID)) { // find user
+                    foundUser = true;
+                    sb.append(formatUser(user, boats, verbose)); // format user
+                }
+            }
+            if (!foundUser) return "No user with that member ID was found.";
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Creates a simple
+     * @param boats list of all boats in the system
+     * @return String
+     */
+    public String listUsers(List<String> boats, boolean verbose) {
         StringBuilder list = new StringBuilder();
+        list.append("\n");
         try {
             for (String user: Files.readAllLines(pathFile, cs)) {
-                list.append(user).append("\n");
+                list.append(formatUser(user, boats, verbose));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,24 +115,57 @@ public class UserModel {
         return list.toString();
     }
 
-
-    public String listUsersAndBoat(List<String> boats) {
+    /**
+     * Formats the user information into a printable string
+     * @param user unformatted user string
+     * @param boats list of boats
+     * @param verbose true for verbose, false for not
+     * @return
+     */
+    private String formatUser(String user, List<String> boats, boolean verbose) {
         StringBuilder sb = new StringBuilder();
-        try {
-            for (String user : Files.readAllLines(pathFile, cs)) {
-                sb.append(user);
-                String memberID = user.substring(0, user.indexOf(","));
-                assert boats != null;
-                for (String boat : boats) {
-                    if (boat.contains(memberID)) sb.append("\n").append("\t").append(boat);
-                }
-                sb.append("\n");
+        // defining titles for each segment of the member entry
+        String[] titles = {"Member ID: ", "Permission level: ", "Full name: ", "Personal number: "};
+        // counter to use to grab titles from above array
+        int counter = 0;
+        // go through each segment of unformatted user string and format it with appropriate title
+        for(String segment : user.split(",")) {
+            sb.append(titles[counter]).append(segment).append("\n");
+            counter++;
+        }
+
+        // counter to keep track of amount of boats for the current user
+        int boatCounter = 0;
+        for (String boat : boats) {
+            // check if boat contains the member ID of the current user
+            if (boat.contains(user.substring(0, user.indexOf(",")))) {
+                // if the mode is set to verbose we format the boat string too and add it to the stringbuilder
+                if (verbose) sb.append("Boat ").append(boatCounter).append(":\n").append(formatBoat(boat));
+                boatCounter++;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        sb.append("Number of boats: ").append(boatCounter);
+        return sb.append("\n").toString();
+    }
+
+    /**
+     * Format boat entry
+     * @param boat unformatted boat string
+     * @return formatted string
+     */
+    private String formatBoat(String boat){
+        StringBuilder sb = new StringBuilder();
+        // defining titles for each segment of the boat entry
+        String[] titles = {"Type: ", "Length: "};
+        String[] boatSplit = boat.split(",");
+        // for loop starts at index 1 to skip over member id part in boat string
+        // (format is: memID,type,length)
+        for(int i = 1; i < boatSplit.length; i++) {
+            sb.append("\t").append(titles[i - 1]).append(boatSplit[i]).append("\n");
         }
         return sb.toString();
     }
+
 
     public void setName (String newName) {
         name = newName;
@@ -118,7 +180,7 @@ public class UserModel {
     }
 
     public String getPersNum () {
-        return  persNum;
+        return persNum;
     }
 
     public void setMemID () {

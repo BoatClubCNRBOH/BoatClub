@@ -2,7 +2,6 @@ package View;
 
 import Controller.DatabaseControll;
 import Model.BoatModel;
-import Model.UserModel;
 
 import java.util.Scanner;
 
@@ -38,7 +37,14 @@ public class BoatView {
     }
 
     public void removeBoat() {
-
+        System.out.println("Which boat would you like to remove?\nBoats:");
+        System.out.println("\n" + boat.personalBoatsToString(memID));
+        System.out.print("Choice: ");
+        if (boat.deleteBoat(memID, scan.nextLine())) {
+            System.out.println("Success!");
+        } else {
+            System.out.println("Failed to remove boat.");
+        }
     }
 
     public String[] registerBoat() {
@@ -51,8 +57,8 @@ public class BoatView {
     }
 
     public void boatEdit() {
-        System.out.println("Which boat would you like to edit\nBoats:");
-        System.out.println("\n" + boat.printPersonalBoats(memID));
+        System.out.println("Which boat would you like to edit?\nBoats:");
+        System.out.println("\n" + boat.personalBoatsToString(memID));
         System.out.print("Choice: ");
         String boatChoice = scan.nextLine();
         System.out.print("What would you like to edit\n\n\t1. Type\n\t2. Length\n\nChoice: ");

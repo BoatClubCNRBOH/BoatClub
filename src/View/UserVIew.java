@@ -7,7 +7,7 @@ import Model.UserModel;
 import java.util.Scanner;
 
 public class UserVIew {
-    UserModel change = new UserModel();
+    UserModel userModel = new UserModel();
     DatabaseControll remove = new DatabaseControll();
     BoatModel boat = new BoatModel();
     InterfaceView mainMenu = new InterfaceView();
@@ -20,7 +20,7 @@ public class UserVIew {
     public void userInterface() {
         Scanner scan = new Scanner(System.in);
         String choice;
-        System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Show members (without boats)\n\t4. Show members (with boats)\n\t5. Go Back\n\nChoose: ");
+        System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Show members (without boats)\n\t4. Show members (with boats)\n\t5. Show specific member\n\t6. Go Back\n\nChoose: ");
         choice = scan.nextLine();
         switch (choice) {
             case "1":
@@ -31,14 +31,17 @@ public class UserVIew {
                     remove.removeEntry("userDB.csv", 0, memID);
                 else userInterface();
             case "3":
-                System.out.println(change.listUsersSimple());
+                System.out.println(userModel.listUsers(boat.getBoats(), false));
                 System.out.print("Go back with any input: ");
                 if (scan.nextLine() != null) userInterface();
             case "4":
-                System.out.println(change.listUsersAndBoat(boat.getBoats()));
+                System.out.println(userModel.listUsers(boat.getBoats(), true));
                 System.out.print("Go back with any input: ");
                 if (scan.nextLine() != null) userInterface();
             case "5":
+                System.out.print("Enter member ID of the user you want to show: ");
+                System.out.println(userModel.listSpecificUser(scan.nextLine(), boat.getBoats(), true));
+            case "6":
                 mainMenu.getAuthenticatedPage(memID);
             default:
                 System.out.println("Invalid Option");
@@ -63,7 +66,7 @@ public class UserVIew {
             userInterface();
         } else {
             System.out.println("\nNew value: ");
-            change.changeInfo(memID, sc.nextLine(), Integer.parseInt(res));
+            userModel.changeInfo(memID, sc.nextLine(), Integer.parseInt(res));
             changeMenu();
         }
         return res;

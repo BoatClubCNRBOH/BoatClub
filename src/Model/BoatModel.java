@@ -25,6 +25,10 @@ public class BoatModel {
     private BoatType boatType;
     private String boatLength;
 
+    /**
+     * Gets all the boats from the database
+     * @return List of boats
+     */
     public List<String> getBoats() {
         try {
             return Files.readAllLines(filePath, StandardCharsets.UTF_8);
@@ -34,7 +38,12 @@ public class BoatModel {
         return null;
     }
 
-    private List<String> getPersonalBoats(String memID) {
+    /**
+     * Gets a list of the users boats from the total boat selection
+     * @param memID user member ID
+     * @return list of personal boats
+     */
+    public List<String> getPersonalBoats(String memID) {
         List<String> boats = getBoats();
         List<String> userBoats = new ArrayList<>();
         for (String boat : boats) {
@@ -45,7 +54,12 @@ public class BoatModel {
         return userBoats;
     }
 
-    public String printPersonalBoats(String memID) {
+    /**
+     * Generates a printable string of the user's boat
+     * @param memID user member ID
+     * @return string of boats
+     */
+    public String personalBoatsToString(String memID) {
         List<String> boats = getPersonalBoats(memID);
         StringBuilder sb = new StringBuilder();
         AtomicInteger boatIndex = new AtomicInteger(1);
@@ -54,6 +68,30 @@ public class BoatModel {
             boatIndex.getAndIncrement();
         });
         return sb.toString();
+    }
+
+    /**
+     * Removes a selected boat from the database
+     * @param memID member ID
+     * @param choice the user choice of boat
+     */
+    public boolean deleteBoat(String memID, String choice) {
+        List<String> allBoats = getBoats();
+        List<String> userBoats = getPersonalBoats(memID);
+        try {
+            new FileWriter("boatDB.csv", false).close();
+            FileWriter fw = new FileWriter("boatDB.csv");
+            for(String boat: allBoats) {
+                if (!boat.equals(userBoats.get(Integer.parseInt(choice) - 1))) {
+                    fw.write(boat + "\n");
+                }
+            };
+            fw.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

@@ -73,7 +73,7 @@ public class InterfaceView {
         UserVIew view = new UserVIew(memID);
         BoatView boat = new BoatView();
         Scanner scan = new Scanner(System.in);
-        System.out.print("\n\t1. Member Options\n\t2. Boat Options\n\t3. Logout\n\nChoose option: ");
+        System.out.print("\nBoat Club\n\n\t1. Member Options\n\t2. Boat Options\n\t3. Logout\n\nChoose option: ");
         String choice = scan.nextLine();
         if (choice.equals("1")) {
             view.userInterface();
