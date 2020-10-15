@@ -22,7 +22,7 @@ public class InterfaceView {
             case "1":
                 memID = login();
                 if (memID == null) askLoginOrRegistration();
-                else getAuthenticatedPage();
+                else getAuthenticatedPage(memID);
             case "2":
                 String[] newUser = register();
                 db.writeObject(newUser, "userDB.csv");
@@ -70,7 +70,7 @@ public class InterfaceView {
      * Prints authenticated/logged in page
      * @return the users choice from the menu
      */
-    public String getAuthenticatedPage() {
+    public String getAuthenticatedPage(String memID) {
         UserVIew view = new UserVIew(memID);
         Scanner scan = new Scanner(System.in);
         System.out.print("\n\t1. Member Options\n\t2. Boat Options\n\t3. Logout\n\nChoose option: ");
@@ -89,14 +89,14 @@ public class InterfaceView {
                     return "BoatRem";
                 default:
                     System.out.println("Invalid Option");
-                    getAuthenticatedPage();
+                    getAuthenticatedPage(memID);
                     break;
             }
         } else if (choice.equals("3")){
             askLoginOrRegistration();
         } else {
             System.out.println("\nInvalid input try again!");
-            getAuthenticatedPage();
+            getAuthenticatedPage(memID);
         }
         return "No Option";
     }

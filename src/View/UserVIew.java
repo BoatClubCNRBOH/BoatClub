@@ -10,6 +10,7 @@ public class UserVIew {
     UserModel change = new UserModel();
     DatabaseControll remove = new DatabaseControll();
     BoatModel boat = new BoatModel();
+    InterfaceView mainMenu = new InterfaceView();
 
     private String memID;
     public UserVIew(String memID) {
@@ -38,7 +39,7 @@ public class UserVIew {
                 System.out.print("Go back with any input: ");
                 if (scan.nextLine() != null) userInterface();
             case "5":
-                break;
+                mainMenu.getAuthenticatedPage(memID);
             default:
                 System.out.println("Invalid Option");
                 userInterface();
@@ -55,15 +56,14 @@ public class UserVIew {
         System.out.print("\n\n\t1. Change full name\n\t2. Change personal number\n\t3. Cancel\n\nChoose: ");
         Scanner sc = new Scanner(System.in);
         String res = sc.nextLine();
-        if (res.equals("1")) {
-            System.out.println("\nNew full name: ");
-            change.changeInfo(memID, sc.nextLine(), 1);
-        } else if (res.equals("2")) {
-
+        if (!res.equals("1") && !res.equals("2") && !res.equals("3")) {
+            System.out.println("Invalid");
+            changeMenu();
         } else if (res.equals("3")) {
             userInterface();
         } else {
-            System.out.println("Invalid");
+            System.out.println("\nNew value: ");
+            change.changeInfo(memID, sc.nextLine(), Integer.parseInt(res));
             changeMenu();
         }
         return res;
