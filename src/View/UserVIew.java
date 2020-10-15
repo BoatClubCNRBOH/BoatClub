@@ -6,13 +6,14 @@ import Model.UserModel;
 import java.util.Scanner;
 
 public class UserVIew {
+    UserModel change = new UserModel();
+    DatabaseControll remove = new DatabaseControll();
     private String memID;
     public UserVIew(String memID) {
         this.memID = memID;
     }
 
     public void userInterface() {
-        DatabaseControll remove = new DatabaseControll();
         Scanner scan = new Scanner(System.in);
         String choice;
         System.out.print("\nMember Options\n\n\t1. Change Info\n\t2. Delete Member\n\t3. Show members (without boats)\n\t4. Show members (with boats)\n\t5. Go Back\n\nChoose: ");
@@ -26,7 +27,9 @@ public class UserVIew {
                     remove.removeEntry("userDB.csv", 0, memID);
                 else userInterface();
             case "3":
-
+                System.out.println(change.listUsersSimple());
+                System.out.print("Go back with any input: ");
+                if (scan.nextLine() != null) userInterface();
             case "4":
 
             case "5":
@@ -44,7 +47,6 @@ public class UserVIew {
     * @return the option chosen
     */
     private String changeMenu() {
-        UserModel change = new UserModel();
         System.out.print("\n\n\t1. Change full name\n\t2. Change personal number\n\t3. Cancel\n\nChoose: ");
         Scanner sc = new Scanner(System.in);
         String res = sc.nextLine();

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserModel {
+    private Path pathFile = Paths.get("userDB.csv");
+    private Charset cs = StandardCharsets.UTF_8;
     private String name;
     private String persNum;
     private String memID;
@@ -51,7 +53,7 @@ public class UserModel {
         //  Fetch user from db and keep as temp object here then remove from db
         //  then change ifo of class and then add back the object to db.
         try {
-            List<String> lines = Files.readAllLines(Paths.get("userDB.csv"), StandardCharsets.UTF_8);
+            List<String> lines = Files.readAllLines(pathFile, cs);
             new FileWriter("userDB.csv", false).close(); // add one to the end to be able to use the number as an index
             int option = optionChoice + 1;
             FileWriter fw = new FileWriter("userDB.csv");
@@ -67,6 +69,39 @@ public class UserModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Lists users
+     */
+    public String listUsersSimple() {
+        StringBuilder list = new StringBuilder();
+        try {
+            for (String user: Files.readAllLines(pathFile, cs)) {
+                list.append(user).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list.toString();
+    }
+
+
+    public String listUsersAndBoat(List<String> boats) {
+        StringBuilder list = new StringBuilder();
+        try {
+            for (String user : Files.readAllLines(pathFile, cs)) {
+                list.append(user);
+                String memberID = user.substring(0, user.indexOf(","));
+                assert boats != null;
+                for (String boat : boats) {
+                    if (boat.contains(memberID)) list.append("\n").append("\t").append(boat);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list.toString();
     }
 
     public void setName (String newName) {

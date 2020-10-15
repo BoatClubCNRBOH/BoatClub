@@ -26,6 +26,7 @@ public class InterfaceView {
             case "2":
                 String[] newUser = register();
                 db.writeObject(newUser, "userDB.csv");
+                askLoginOrRegistration();
             case "3":
                 System.exit(1);
             default:
