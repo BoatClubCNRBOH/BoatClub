@@ -72,26 +72,14 @@ public class InterfaceView {
      */
     public String getAuthenticatedPage(String memID) {
         UserVIew view = new UserVIew(memID);
+        BoatView boat = new BoatView();
         Scanner scan = new Scanner(System.in);
         System.out.print("\n\t1. Member Options\n\t2. Boat Options\n\t3. Logout\n\nChoose option: ");
         String choice = scan.nextLine();
         if (choice.equals("1")) {
             view.userInterface();
         } else if (choice.equals("2")) {
-            System.out.print("\nBoat Options\n\n\t1. Add Boat\n\t2. Edit Boat\n\t3. Remove Boat\n\t4. Go Back\n\nChoose: ");
-            choice = scan.nextLine();
-            switch (choice) {
-                case "1":
-                    return "BoatAdd";
-                case "2":
-                    return "BoatEd";
-                case "3":
-                    return "BoatRem";
-                default:
-                    System.out.println("Invalid Option");
-                    getAuthenticatedPage(memID);
-                    break;
-            }
+            boat.boatInterface(memID);
         } else if (choice.equals("3")){
             askLoginOrRegistration();
         } else {

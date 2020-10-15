@@ -1,35 +1,46 @@
 package View;
 
+import Model.BoatModel;
+import Model.UserModel;
+
+import java.util.Scanner;
+
 public class BoatView {
-    public enum BoatType {
-        Sailboat, Motorsailer, Canoe, Other
-    }
-    private BoatType boatType;
-    private String boatLength;
-    private String boat;
+    InterfaceView mainMenu = new InterfaceView();
+
+    private String memID;
 
 
-    public String getBoat() {
-        return boat;
+
+    public void boatInterface(String memID) {
+        this.memID = memID;
+        Scanner scan = new Scanner(System.in);
+        System.out.print("\nBoat Options\n\n\t1. Add Boat\n\t2. Edit Boat\n\t3. Remove Boat\n\t4. Go Back\n\nChoose: ");
+        switch (scan.nextLine()) {
+            case "1":
+
+            case "2":
+
+            case "3":
+
+            case "4":
+                mainMenu.getAuthenticatedPage(memID);
+            default:
+                System.out.println("Invalid Option");
+                boatInterface(memID);
+                break;
+        }
     }
 
-    public void setBoat(String boat) {
-        this.boat = boat;
+    public String[] registerBoat() {
+        BoatModel boat = new BoatModel();
+        Scanner scan = new Scanner(System.in);
+        System.out.print("\n\nTypes\n\n\t1. Sailboat\n\t2. Motorsailer\n\t3. Kayak/Canoe\n\t4. Other\n\nChoose:  ");
+        boat.setBoatType(scan.nextLine());
+        System.out.print("Length: ");
+        boat.setBoatLength(scan.nextLine());
+        return null;
     }
 
-    public String getBoatLength() {
-        return boatLength;
-    }
 
-    public void setBoatLength(String boatLength) {
-        this.boatLength = boatLength;
-    }
-
-    public BoatType getBoatType() {
-        return boatType;
-    }
-
-    public void setBoatType(BoatType boatType) {
-        this.boatType = boatType;
-    }
 }
