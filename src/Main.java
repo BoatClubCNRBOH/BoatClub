@@ -1,4 +1,4 @@
-package View;
+import View.InterfaceView;
 
 public class Main {
 

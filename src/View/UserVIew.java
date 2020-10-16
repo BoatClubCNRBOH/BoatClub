@@ -27,9 +27,10 @@ public class UserVIew {
                 changeMenu();
             case "2":
                 System.out.print("\nAre you sure you want to delete your user? (Y/N): ");
-                if (scan.nextLine().equals("Y"))
+                if (scan.nextLine().toUpperCase().equals("Y")) {
                     remove.removeEntry("userDB.csv", 0, memID);
-                else userInterface();
+                    mainMenu.askLoginOrRegistration();
+                } else userInterface();
             case "3":
                 System.out.println(userModel.listUsers(boat.getBoats(), false));
                 System.out.print("Go back with any input: ");
@@ -41,6 +42,8 @@ public class UserVIew {
             case "5":
                 System.out.print("Enter member ID of the user you want to show: ");
                 System.out.println(userModel.listSpecificUser(scan.nextLine(), boat.getBoats(), true));
+                System.out.print("Go back with any input: ");
+                if (scan.nextLine() != null) userInterface();
             case "6":
                 mainMenu.getAuthenticatedPage(memID);
             default:

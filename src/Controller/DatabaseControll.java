@@ -36,6 +36,12 @@ public class DatabaseControll {
                 for (String user : lines) {
                     if (!user.contains(memID)) fw.write(user);
                 }
+                new FileWriter("./boatDB.csv", false).close();
+                for (String boat : lines) {
+                    if (boat.contains(memID)) {
+                        fw.write(boat);
+                    }
+                }
             } else {
                 int check = 0;
                 for (String boat : lines) {

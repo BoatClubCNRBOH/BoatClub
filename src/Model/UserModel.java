@@ -136,16 +136,18 @@ public class UserModel {
 
         // counter to keep track of amount of boats for the current user
         int boatCounter = 0;
-        for (String boat : boats) {
-            // check if boat contains the member ID of the current user
-            if (boat.contains(user.substring(0, user.indexOf(",")))) {
-                // if the mode is set to verbose we format the boat string too and add it to the stringbuilder
-                if (verbose) sb.append("Boat ").append(boatCounter).append(":\n").append(formatBoat(boat));
-                boatCounter++;
+        if (boats != null) {
+            for (String boat : boats) {
+                // check if boat contains the member ID of the current user
+                if (boat.contains(user.substring(0, user.indexOf(",")))) {
+                    // if the mode is set to verbose we format the boat string too and add it to the stringbuilder
+                    if (verbose) sb.append("Boat ").append(boatCounter + 1).append(":\n").append(formatBoat(boat));
+                    boatCounter++;
+                }
             }
+            sb.append("Number of boats: ").append(boatCounter);
         }
-        sb.append("Number of boats: ").append(boatCounter);
-        return sb.append("\n").toString();
+        return sb.append("\n\n").toString();
     }
 
     /**
