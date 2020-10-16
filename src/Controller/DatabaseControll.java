@@ -34,19 +34,23 @@ public class DatabaseControll {
             FileWriter fw = new FileWriter(fileName);
             if (entryIndex == 0) {
                 for (String user : lines) {
-                    if (!user.contains(memID)) fw.write(user);
+                    String[] userString = user.split(",");
+                    if (!user.contains(memID)) writeObject(userString, "./userDB.csv");
                 }
+                lines = Files.readAllLines(Paths.get("./boatDB.csv"), StandardCharsets.UTF_8);
                 new FileWriter("./boatDB.csv", false).close();
                 for (String boat : lines) {
-                    if (boat.contains(memID)) {
-                        fw.write(boat);
+                    String[] boatString = boat.split(",");
+                    if (!boat.contains(memID)) {
+                        writeObject(boatString, "./boatDB.csv");
                     }
                 }
             } else {
                 int check = 0;
                 for (String boat : lines) {
+                    String[] boatString = boat.split(",");
                     if (check == entryIndex - 1) {
-                        fw.write(boat);
+                        writeObject(boatString, "./boatDB.csv");
                     } else if (boat.contains(memID)) check++;
                 }
 
